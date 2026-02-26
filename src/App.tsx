@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from './contexts/AuthContext';
+import Login from './components/Auth/Login';
 import Sidebar from './components/Layout/Sidebar';
 import Header from './components/Layout/Header';
 import HeroSection from './components/Layout/HeroSection';
@@ -14,6 +16,7 @@ import FloatingActionButton from './components/Common/FloatingActionButton';
 type View = 'dashboard' | 'all-tasks' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'settings';
 
 function App() {
+  const { isAuthenticated, isLoading } = useAuth();
   const [currentView, setCurrentView] = useState<View>('dashboard');
   const [searchQuery, setSearchQuery] = useState('');
   const [showHero, setShowHero] = useState(true);
@@ -21,6 +24,23 @@ function App() {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
+
+  // Show loading state while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <Login />;
+  }
 
   const renderView = () => {
     switch (currentView) {

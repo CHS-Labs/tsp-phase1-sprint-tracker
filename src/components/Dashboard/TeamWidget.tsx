@@ -1,8 +1,9 @@
 import { Users } from 'lucide-react';
-import { teamMembers } from '../../data/teamData';
+import { useData } from '../../contexts/DataContext';
 
 export default function TeamWidget() {
-  const activeMembers = teamMembers.filter(m => m.status === 'active').length;
+  const { team } = useData();
+  const activeMembers = team.filter(m => m.status === 'active').length;
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
@@ -18,7 +19,7 @@ export default function TeamWidget() {
       </div>
 
       <div className="space-y-3">
-        {teamMembers.map((member, i) => (
+        {team.map((member, i) => (
           <div
             key={i}
             className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"

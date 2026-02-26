@@ -1,7 +1,8 @@
 import { FileText, Users, Calendar, Shield, Mail, Phone, User, Printer } from 'lucide-react';
-import { teamMembers } from '../../data/teamData';
+import { useData } from '../../contexts/DataContext';
 
 export default function Settings() {
+  const { team } = useData();
   return (
     <div className="space-y-6 print-full-width">
       <div className="flex items-center justify-between">
@@ -90,7 +91,7 @@ export default function Settings() {
           Team Directory
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {teamMembers.map((member, i) => (
+          {team.map((member, i) => (
             <div
               key={i}
               className="bg-gray-50 rounded-lg p-5 border border-gray-200 hover:shadow-md transition-all"

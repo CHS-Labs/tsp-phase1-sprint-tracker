@@ -3,7 +3,8 @@ import { ChevronDown, ChevronRight, CheckCircle, Calendar, Edit2 } from 'lucide-
 // Pull live data from the DataContext instead of using dummy data
 import { useData } from '../../contexts/DataContext';
 import { useAuth } from '../../contexts/AuthContext';
-import { TaskStatus } from '../../data/dummyData';
+
+type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
 
 /*
  * Updated MyTasksTable

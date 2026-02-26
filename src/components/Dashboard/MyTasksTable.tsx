@@ -103,7 +103,7 @@ export default function MyTasksTable() {
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-      <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200">
+      <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900">My Action Items</h3>
       </div>
 
@@ -192,7 +192,7 @@ export default function MyTasksTable() {
                     <div className="flex items-center gap-2">
                       <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden">
                         <div
-                          className="bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] h-full transition-all"
+                          className="bg-[#E98A24] h-full transition-all"
                           style={{ width: `${task.progress}%` }}
                         />
                       </div>
@@ -297,7 +297,7 @@ export default function MyTasksTable() {
                 </button>
                 <button
                   onClick={() => setEditingTask(null)}
-                  className="px-4 py-2 bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white rounded-lg hover:shadow-lg transition-all"
+                  className="px-4 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all"
                 >
                   Save Changes
                 </button>

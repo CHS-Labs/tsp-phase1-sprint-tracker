@@ -6,10 +6,10 @@ const Login: React.FC = () => {
   const { login } = useAuth();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8">
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-orange-400 to-blue-500 rounded-2xl mb-4">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-[#E98A24] rounded-2xl mb-4">
             <span className="text-3xl font-bold text-white">TSP</span>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">

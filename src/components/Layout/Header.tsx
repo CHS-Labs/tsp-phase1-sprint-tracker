@@ -34,7 +34,7 @@ export default function Header({ onSearch }: HeaderProps) {
               <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
               <p className="text-xs text-gray-500">Sprint Tracker</p>
             </div>
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-semibold">
+            <div className="w-10 h-10 rounded-full bg-[#E98A24] flex items-center justify-center text-white font-semibold">
               {user?.name?.charAt(0).toUpperCase()}
             </div>
           </div>

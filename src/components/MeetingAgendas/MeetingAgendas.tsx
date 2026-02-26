@@ -16,12 +16,12 @@ export default function MeetingAgendas() {
       </div>
 
       <div className="relative">
-        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#E98A24] via-[#1A9CD7] to-gray-300" />
+        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gray-300" />
 
         <div className="space-y-8">
           {meetingAgendas.map((agenda, index) => (
             <div key={agenda.id} className="relative pl-20 group">
-              <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
+              <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-[#E98A24] flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
                 W{agenda.weekNumber}
               </div>
 
@@ -66,7 +66,7 @@ export default function MeetingAgendas() {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setSelectedAgenda(agenda)}
-                    className="px-4 py-2 bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white rounded-lg hover:shadow-lg transition-all text-sm font-semibold"
+                    className="px-4 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all text-sm font-semibold"
                   >
                     <FileText size={16} className="inline mr-2" />
                     View Full Agenda
@@ -90,7 +90,7 @@ export default function MeetingAgendas() {
       {selectedAgenda && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-            <div className="px-6 py-4 bg-gradient-to-r from-gray-50 to-white border-b border-gray-200 flex items-center justify-between">
+            <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-bold text-gray-900">{selectedAgenda.title}</h3>
                 <p className="text-sm text-gray-600">
@@ -132,7 +132,7 @@ export default function MeetingAgendas() {
                   rows={4}
                   placeholder="Add your notes about this meeting..."
                 />
-                <button className="mt-3 px-4 py-2 bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white rounded-lg hover:shadow-lg transition-all text-sm font-semibold">
+                <button className="mt-3 px-4 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all text-sm font-semibold">
                   Save Notes
                 </button>
               </div>

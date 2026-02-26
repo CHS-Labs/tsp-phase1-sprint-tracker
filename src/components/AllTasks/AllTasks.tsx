@@ -197,7 +197,7 @@ export default function AllTasks() {
                     <div className="flex items-center gap-2">
                       <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden min-w-[80px]">
                         <div
-                          className="bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] h-full transition-all"
+                          className="bg-[#E98A24] h-full transition-all"
                           style={{ width: `${task.progress}%` }}
                         />
                       </div>

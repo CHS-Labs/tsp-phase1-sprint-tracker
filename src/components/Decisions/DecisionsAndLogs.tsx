@@ -226,7 +226,7 @@ export default function DecisionsAndLogs() {
                             className={`h-full transition-all ${
                               item.completed
                                 ? 'bg-green-500'
-                                : 'bg-gradient-to-r from-[#E98A24] to-[#1A9CD7]'
+                                : 'bg-[#E98A24]'
                             }`}
                             style={{ width: `${item.progress}%` }}
                           />

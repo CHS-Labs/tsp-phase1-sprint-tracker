@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Lightbulb, Calendar, User, Tag, Plus, X } from 'lucide-react';
+import { Lightbulb, Calendar, User, Tag, Plus, X, Printer } from 'lucide-react';
 
 interface ParkingLotItem {
   id: string;
@@ -109,13 +109,22 @@ export default function ParkingLot() {
           <h2 className="text-2xl font-bold text-gray-900">Phase 2 Parking Lot</h2>
           <p className="text-gray-600 mt-1">Ideas and features deferred to future phases</p>
         </div>
-        <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
-        >
-          <Plus size={20} />
-          Add Idea
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => window.print()}
+            className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors no-print"
+          >
+            <Printer size={18} />
+            <span className="font-semibold">Print</span>
+          </button>
+          <button
+            onClick={() => setShowAddModal(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
+          >
+            <Plus size={20} />
+            Add Idea
+          </button>
+        </div>
       </div>
 
       <div className="bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 p-6">

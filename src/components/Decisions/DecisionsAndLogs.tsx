@@ -110,8 +110,12 @@ export default function DecisionsAndLogs() {
           {activeTab === 'decisions' && (
             <div className="space-y-4">
               {decisions.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">No decisions recorded yet.</p>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
+                  <FileText size={48} className="mx-auto text-gray-400 mb-4" />
+                  <p className="text-gray-600">No decisions recorded yet.</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Decision records will appear here from your Google Sheet.
+                  </p>
                 </div>
               ) : (
                 decisions.map((decision) => (
@@ -162,8 +166,12 @@ export default function DecisionsAndLogs() {
           {activeTab === 'risks' && (
             <div className="space-y-4">
               {risks.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">No risks identified yet.</p>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
+                  <AlertTriangle size={48} className="mx-auto text-gray-400 mb-4" />
+                  <p className="text-gray-600">No risks identified yet.</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Risk register items will appear here from your Google Sheet.
+                  </p>
                 </div>
               ) : (
                 risks.map((risk, index) => (
@@ -211,8 +219,12 @@ export default function DecisionsAndLogs() {
           {activeTab === 'validation' && (
             <div className="space-y-4">
               {validationChecklist.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-gray-500">No validation items yet.</p>
+                <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
+                  <CheckCircle size={48} className="mx-auto text-gray-400 mb-4" />
+                  <p className="text-gray-600">No validation items yet.</p>
+                  <p className="text-sm text-gray-500 mt-2">
+                    Validation checklist items will appear here from your Google Sheet.
+                  </p>
                 </div>
               ) : (
                 validationChecklist.map((item, index) => {

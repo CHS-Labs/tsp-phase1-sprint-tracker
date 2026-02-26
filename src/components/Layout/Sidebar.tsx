@@ -23,7 +23,7 @@ export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-gray-900 text-white transition-all duration-300 flex flex-col ${
+      className={`bg-gradient-to-b from-gray-900 via-gray-900 to-[#E98A24]/10 text-white transition-all duration-300 flex flex-col ${
         collapsed ? 'w-20' : 'w-64'
       } min-h-screen`}
     >

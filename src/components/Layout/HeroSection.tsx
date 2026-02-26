@@ -18,7 +18,7 @@ export default function HeroSection() {
       >
         <source src="/CHS Credibility Spine background.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#E98A24]/90 via-[#E98A24]/60 to-[#1A9CD7]/40 z-10" />
 
       <div
         className={`relative z-20 h-full flex flex-col justify-center px-12 transition-all duration-1000 ${

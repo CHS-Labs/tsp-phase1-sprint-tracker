@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { Search, Bell, LogOut, ChevronDown } from 'lucide-react';
+import { Search, Bell } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface HeaderProps {
@@ -7,8 +6,7 @@ interface HeaderProps {
 }
 
 export default function Header({ onSearch }: HeaderProps) {
-  const { user, logout } = useAuth();
-  const [showUserMenu, setShowUserMenu] = useState(false);
+  const { user } = useAuth();
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 sticky top-0 z-10 shadow-sm">
@@ -31,40 +29,14 @@ export default function Header({ onSearch }: HeaderProps) {
             <span className="absolute top-1 right-1 w-2 h-2 bg-[#E98A24] rounded-full" />
           </button>
 
-          <div className="relative pl-4 border-l border-gray-300">
-            <button
-              onClick={() => setShowUserMenu(!showUserMenu)}
-              className="flex items-center gap-3 hover:opacity-80 transition-opacity"
-            >
-              <div className="text-right">
-                <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
-                <p className="text-xs text-gray-500">{user?.email}</p>
-              </div>
-              {user?.picture ? (
-                <img
-                  src={user.picture}
-                  alt={user.name}
-                  className="w-10 h-10 rounded-full"
-                />
-              ) : (
-                <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-semibold">
-                  {user?.name?.charAt(0).toUpperCase()}
-                </div>
-              )}
-              <ChevronDown size={16} className="text-gray-400" />
-            </button>
-
-            {showUserMenu && (
-              <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1">
-                <button
-                  onClick={logout}
-                  className="w-full px-4 py-2 text-left text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
-                >
-                  <LogOut size={16} />
-                  Sign Out
-                </button>
-              </div>
-            )}
+          <div className="flex items-center gap-3 pl-4 border-l border-gray-300">
+            <div className="text-right">
+              <p className="text-sm font-semibold text-gray-900">{user?.name}</p>
+              <p className="text-xs text-gray-500">Sprint Tracker</p>
+            </div>
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-semibold">
+              {user?.name?.charAt(0).toUpperCase()}
+            </div>
           </div>
         </div>
       </div>

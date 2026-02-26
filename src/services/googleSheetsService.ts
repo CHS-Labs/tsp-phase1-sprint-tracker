@@ -16,27 +16,16 @@ const SPREADSHEET_ID = import.meta.env.VITE_SPREADSHEET_ID;
 const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
 class GoogleSheetsService {
-  private accessToken: string | null = null;
-
-  setAccessToken(token: string) {
-    this.accessToken = token;
-  }
+  // Service account approach - no user token needed
+  // Using API key for read-only access
 
   private async fetchSheetData(sheetName: string): Promise<any[][]> {
-    if (!this.accessToken) {
-      throw new Error('Not authenticated. Please sign in.');
-    }
-
     const range = `${sheetName}!A:Z`;
     const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(
       range
     )}?key=${API_KEY}`;
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-      },
-    });
+    const response = await fetch(url);
 
     if (!response.ok) {
       throw new Error(`Failed to fetch ${sheetName}: ${response.statusText}`);
@@ -44,33 +33,6 @@ class GoogleSheetsService {
 
     const data = await response.json();
     return data.values || [];
-  }
-
-  private async updateSheetData(
-    sheetName: string,
-    range: string,
-    values: any[][]
-  ): Promise<void> {
-    if (!this.accessToken) {
-      throw new Error('Not authenticated. Please sign in.');
-    }
-
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${SPREADSHEET_ID}/values/${encodeURIComponent(
-      `${sheetName}!${range}`
-    )}?valueInputOption=USER_ENTERED&key=${API_KEY}`;
-
-    const response = await fetch(url, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Bearer ${this.accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ values }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to update ${sheetName}: ${response.statusText}`);
-    }
   }
 
   private parseRows<T>(
@@ -111,17 +73,6 @@ class GoogleSheetsService {
       notes: row[9] || '',
       linkedDecisionId: row[10] || '',
     }));
-  }
-
-  async updateTaskStatus(taskId: string, status: string): Promise<void> {
-    const rows = await this.fetchSheetData(SHEET_NAMES.ACTION_LOG);
-    const rowIndex = rows.findIndex((row, idx) => idx > 0 && row[0] === taskId);
-
-    if (rowIndex === -1) {
-      throw new Error(`Task ${taskId} not found`);
-    }
-
-    await this.updateSheetData(SHEET_NAMES.ACTION_LOG, `G${rowIndex + 1}`, [[status]]);
   }
 
   // Weekly Meeting Log

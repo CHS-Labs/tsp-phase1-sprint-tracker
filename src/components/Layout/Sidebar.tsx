@@ -24,14 +24,14 @@ export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
 
   return (
     <aside
-      className={`bg-gradient-to-b from-gray-900 via-gray-900 to-[#E98A24]/10 text-white transition-all duration-300 flex flex-col ${
+      className={`bg-gray-900 text-white transition-all duration-300 flex flex-col ${
         collapsed ? 'w-20' : 'w-64'
       } min-h-screen`}
     >
       <div className="p-6 border-b border-gray-800">
         <div className="flex items-center justify-between">
           {!collapsed && (
-            <h1 className="text-xl font-bold bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] bg-clip-text text-transparent">
+            <h1 className="text-xl font-bold text-[#E98A24]">
               The Simple Plan
             </h1>
           )}
@@ -55,7 +55,7 @@ export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
                   onClick={() => onViewChange(item.id)}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white shadow-lg'
+                      ? 'bg-[#E98A24] text-white shadow-lg'
                       : 'text-gray-400 hover:text-white hover:bg-gray-800'
                   }`}
                 >
@@ -75,7 +75,7 @@ export default function Sidebar({ currentView, onViewChange }: SidebarProps) {
             <p>Mar 1 – Apr 30, 2026</p>
             <div className="mt-3 bg-gray-800 rounded-full h-2 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] h-full transition-all"
+                className="bg-[#E98A24] h-full transition-all"
                 style={{ width: '35%' }}
               />
             </div>

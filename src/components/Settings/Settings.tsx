@@ -8,14 +8,14 @@ export default function Settings() {
         <h2 className="text-2xl font-bold text-gray-900">Sprint Information</h2>
         <button
           onClick={() => window.print()}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors no-print"
+          className="text-gray-400 hover:text-[#E98A24] transition-colors no-print"
+          aria-label="Print this page"
         >
-          <Printer size={18} />
-          <span className="font-semibold">Print</span>
+          <Printer size={20} />
         </button>
       </div>
 
-      <div className="bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] rounded-xl shadow-lg p-8 text-white">
+      <div className="bg-[#E98A24] rounded-xl shadow-lg p-8 text-white">
         <h3 className="text-2xl font-bold mb-4">
           The Simple Plan – Phase 1 Extension
         </h3>
@@ -75,7 +75,7 @@ export default function Settings() {
             'Create validation checklists for all deliverables'
           ].map((objective, i) => (
             <div key={i} className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
+              <div className="w-6 h-6 rounded-full bg-[#E98A24] flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                 {i + 1}
               </div>
               <p className="text-gray-700 flex-1">{objective}</p>
@@ -96,7 +96,7 @@ export default function Settings() {
               className="bg-gray-50 rounded-lg p-5 border border-gray-200 hover:shadow-md transition-all"
             >
               <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                <div className="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
                   {member.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <div className="flex-1 min-w-0">

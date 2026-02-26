@@ -8,9 +8,9 @@ export default function FloatingActionButton() {
   const [showModal, setShowModal] = useState<ActionType>(null);
 
   const actions = [
-    { id: 'task' as ActionType, label: 'New Task', icon: ListTodo, color: 'from-[#E98A24] to-orange-600' },
-    { id: 'decision' as ActionType, label: 'Log Decision', icon: FileText, color: 'from-[#1A9CD7] to-blue-600' },
-    { id: 'change' as ActionType, label: 'Change Order', icon: GitBranch, color: 'from-purple-500 to-purple-700' }
+    { id: 'task' as ActionType, label: 'New Task', icon: ListTodo, color: 'bg-[#E98A24]' },
+    { id: 'decision' as ActionType, label: 'Log Decision', icon: FileText, color: 'bg-gray-700' },
+    { id: 'change' as ActionType, label: 'Change Order', icon: GitBranch, color: 'bg-gray-600' }
   ];
 
   return (
@@ -28,7 +28,7 @@ export default function FloatingActionButton() {
                       setShowModal(action.id);
                       setIsOpen(false);
                     }}
-                    className={`flex items-center gap-3 bg-gradient-to-r ${action.color} text-white px-4 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all hover:scale-105`}
+                    className={`flex items-center gap-3 ${action.color} text-white px-4 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all hover:scale-105`}
                     style={{
                       animation: `slideUp 0.3s ease-out ${index * 0.1}s both`
                     }}
@@ -43,7 +43,7 @@ export default function FloatingActionButton() {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`w-16 h-16 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white shadow-lg hover:shadow-xl transition-all flex items-center justify-center ${
+            className={`w-16 h-16 rounded-full bg-[#E98A24] text-white shadow-lg hover:shadow-xl transition-all flex items-center justify-center ${
               isOpen ? 'rotate-45' : ''
             }`}
           >
@@ -218,7 +218,7 @@ export default function FloatingActionButton() {
                     e.preventDefault();
                     setShowModal(null);
                   }}
-                  className="px-6 py-2 bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
+                  className="px-6 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
                 >
                   Submit
                 </button>

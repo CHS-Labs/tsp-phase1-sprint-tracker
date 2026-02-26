@@ -111,14 +111,14 @@ export default function ParkingLot() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
+          className="flex items-center gap-2 px-4 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
         >
           <Plus size={20} />
           Add Idea
         </button>
       </div>
 
-      <div className="bg-gradient-to-r from-[#E98A24]/10 via-[#1A9CD7]/10 to-purple-500/10 rounded-xl border-2 border-dashed border-gray-300 p-6">
+      <div className="bg-gray-50 rounded-xl border-2 border-dashed border-gray-300 p-6">
         <div className="flex items-start gap-4">
           <Lightbulb size={32} className="text-[#E98A24] flex-shrink-0" />
           <div>
@@ -324,7 +324,7 @@ export default function ParkingLot() {
                     e.preventDefault();
                     setShowAddModal(false);
                   }}
-                  className="px-6 py-2 bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
+                  className="px-6 py-2 bg-[#E98A24] text-white rounded-lg hover:shadow-lg transition-all font-semibold"
                 >
                   Add to Parking Lot
                 </button>

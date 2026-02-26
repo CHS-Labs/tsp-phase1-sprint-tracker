@@ -27,18 +27,18 @@ export default function Analytics() {
     <div className="space-y-6 print-full-width">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h2>
-        <div className="flex items-center gap-4 no-print">
-          <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <Printer size={18} />
-            <span className="font-semibold">Print</span>
-          </button>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm text-gray-600 no-print">
             <Activity size={18} />
             <span>Real-time sprint metrics</span>
           </div>
+          <button
+            onClick={() => window.print()}
+            className="text-gray-400 hover:text-[#E98A24] transition-colors no-print"
+            aria-label="Print this page"
+          >
+            <Printer size={20} />
+          </button>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export default function Analytics() {
                         y={220 - completedHeight}
                         width="40"
                         height={completedHeight}
-                        fill="url(#gradient1)"
+                        fill="#E98A24"
                         rx="4"
                       />
                       <rect
@@ -152,17 +152,11 @@ export default function Analytics() {
                   );
                 })}
               </g>
-              <defs>
-                <linearGradient id="gradient1" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#E98A24" />
-                  <stop offset="100%" stopColor="#1A9CD7" />
-                </linearGradient>
-              </defs>
             </svg>
           </div>
           <div className="flex items-center justify-center gap-6 mt-4">
             <div className="flex items-center gap-2">
-              <div className="w-4 h-4 bg-gradient-to-b from-[#E98A24] to-[#1A9CD7] rounded" />
+              <div className="w-4 h-4 bg-[#E98A24] rounded" />
               <span className="text-sm text-gray-600">Completed</span>
             </div>
             <div className="flex items-center gap-2">

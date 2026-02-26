@@ -57,7 +57,21 @@ VITE_USER_FEEDBACK_FOLDER_ID=1CHO5TddbhWG9hUlRAQI9HSy1Tgxc_cqt
 - Test deployed application with real data
 - New project: Field Ambassador Feedback Form (separate session)
 
+### Critical Fixes Applied
+1. **Build Errors Fixed** - Remaining components (TeamWidget, MyTasksTable, Settings) were still importing deleted dummy data files. Updated all to use DataContext.
+
+2. **Authentication Blocking Data** - DataContext required OAuth authentication before loading data, but app uses API key for read-only access. Removed authentication requirement so data loads immediately on mount.
+
+3. **Comprehensive Documentation** - Created `DATA_CONNECTIONS.md` with complete mapping of:
+   - All Google Sheets tabs → Component usage
+   - Google Drive folders → Component usage
+   - Service files and data flow
+   - Environment variables
+   - Troubleshooting guide
+
 ### Notes
 - Division of labor established: Claude handles backend, Bolt handles UI/design
 - All dummy data successfully removed
 - Application now pulls 100% real data from Google Sheets and Drive
+- NO OAuth required - uses API key for read-only access
+- Data loads immediately on page mount

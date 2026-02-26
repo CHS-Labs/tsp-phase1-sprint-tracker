@@ -1,7 +1,7 @@
-import { LayoutDashboard, ListTodo, Calendar, FileText, BarChart3, Settings, Lightbulb } from 'lucide-react';
+import { LayoutDashboard, ListTodo, Calendar, FileText, BarChart3, Settings, Lightbulb, MessageSquare } from 'lucide-react';
 import { useState } from 'react';
 
-type View = 'dashboard' | 'all-tasks' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'settings';
+type View = 'dashboard' | 'all-tasks' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
 
 interface SidebarProps {
   currentView: View;
@@ -15,6 +15,7 @@ const menuItems = [
   { id: 'decisions' as View, label: 'Decisions & Logs', icon: FileText },
   { id: 'analytics' as View, label: 'Analytics', icon: BarChart3 },
   { id: 'parking-lot' as View, label: 'Phase 2 Parking Lot', icon: Lightbulb },
+  { id: 'user-feedback' as View, label: 'User Feedback', icon: MessageSquare },
   { id: 'settings' as View, label: 'Settings', icon: Settings }
 ];
 

@@ -8,10 +8,11 @@ import MeetingAgendas from './components/MeetingAgendas/MeetingAgendas';
 import DecisionsAndLogs from './components/Decisions/DecisionsAndLogs';
 import Analytics from './components/Analytics/Analytics';
 import ParkingLot from './components/ParkingLot/ParkingLot';
+import UserFeedback from './components/UserFeedback/UserFeedback';
 import Settings from './components/Settings/Settings';
 import FloatingActionButton from './components/Common/FloatingActionButton';
 
-type View = 'dashboard' | 'all-tasks' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'settings';
+type View = 'dashboard' | 'all-tasks' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
@@ -36,6 +37,8 @@ function App() {
         return <Analytics />;
       case 'parking-lot':
         return <ParkingLot />;
+      case 'user-feedback':
+        return <UserFeedback />;
       case 'settings':
         return <Settings />;
       default:

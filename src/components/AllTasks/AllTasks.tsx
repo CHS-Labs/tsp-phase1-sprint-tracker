@@ -1,17 +1,49 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Filter, Calendar, User, Tag, Printer } from 'lucide-react';
-import { tasks, Task, TaskStatus, Priority } from '../../data/dummyData';
+import { useData } from '../../contexts/DataContext';
+
+type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
+type Priority = 'High' | 'Medium' | 'Low';
 
 export default function AllTasks() {
+  const { tasks, isLoading } = useData();
   const [filterOwner, setFilterOwner] = useState<string>('');
   const [filterCategory, setFilterCategory] = useState<string>('');
   const [filterPriority, setFilterPriority] = useState<Priority | ''>('');
   const [filterStatus, setFilterStatus] = useState<TaskStatus | ''>('');
 
-  const owners = Array.from(new Set(tasks.map(t => t.owner)));
-  const categories = Array.from(new Set(tasks.map(t => t.category)));
+  // Helper to calculate progress from status
+  const getTaskProgress = (status: string): number => {
+    switch (status) {
+      case 'Done':
+        return 100;
+      case 'In Progress':
+        return 50;
+      case 'Blocked':
+        return 10;
+      default:
+        return 0;
+    }
+  };
 
-  const filteredTasks = tasks.filter(task => {
+  // Map Google Sheets data to component format
+  const allTasks = useMemo(() => {
+    return tasks.map((task) => ({
+      id: task.taskId,
+      description: task.taskDescription,
+      owner: task.owner,
+      category: task.relatedSOWCategory,
+      priority: task.priority as Priority,
+      status: task.status as TaskStatus,
+      dueDate: task.dueDate,
+      progress: getTaskProgress(task.status),
+    }));
+  }, [tasks]);
+
+  const owners = Array.from(new Set(allTasks.map(t => t.owner))).filter(Boolean);
+  const categories = Array.from(new Set(allTasks.map(t => t.category))).filter(Boolean);
+
+  const filteredTasks = allTasks.filter(task => {
     if (filterOwner && task.owner !== filterOwner) return false;
     if (filterCategory && task.category !== filterCategory) return false;
     if (filterPriority && task.priority !== filterPriority) return false;
@@ -44,6 +76,17 @@ export default function AllTasks() {
         return 'bg-gray-100 text-gray-700';
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="text-center">
+          <div className="inline-block w-12 h-12 border-4 border-[#E98A24] border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-gray-600">Loading tasks...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6 print-full-width">
@@ -151,61 +194,69 @@ export default function AllTasks() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {filteredTasks.map((task) => (
-                <tr key={task.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-6 py-4">
-                    <span className="text-xs font-mono text-gray-600">{task.id}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <p className="text-sm text-gray-900 font-medium max-w-md">{task.description}</p>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm text-gray-600">{task.owner}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className="text-sm text-gray-600">{task.category}</span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${getPriorityColor(
-                        task.priority
-                      )}`}
-                    >
-                      {task.priority}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${getStatusColor(
-                        task.status
-                      )}`}
-                    >
-                      {task.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2 text-sm text-gray-600">
-                      <Calendar size={14} />
-                      {new Date(task.dueDate).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric',
-                        year: 'numeric'
-                      })}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex items-center gap-2">
-                      <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden min-w-[80px]">
-                        <div
-                          className="bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] h-full transition-all"
-                          style={{ width: `${task.progress}%` }}
-                        />
-                      </div>
-                      <span className="text-xs text-gray-600 font-semibold">{task.progress}%</span>
-                    </div>
+              {filteredTasks.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="px-6 py-12 text-center">
+                    <p className="text-gray-500">No tasks found. Add tasks to your Google Sheet to see them here.</p>
                   </td>
                 </tr>
-              ))}
+              ) : (
+                filteredTasks.map((task) => (
+                  <tr key={task.id} className="hover:bg-gray-50 transition-colors">
+                    <td className="px-6 py-4">
+                      <span className="text-xs font-mono text-gray-600">{task.id}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <p className="text-sm text-gray-900 font-medium max-w-md">{task.description}</p>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-sm text-gray-600">{task.owner}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span className="text-sm text-gray-600">{task.category}</span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${getPriorityColor(
+                          task.priority
+                        )}`}
+                      >
+                        {task.priority}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold ${getStatusColor(
+                          task.status
+                        )}`}
+                      >
+                        {task.status}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2 text-sm text-gray-600">
+                        <Calendar size={14} />
+                        {task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-US', {
+                          month: 'short',
+                          day: 'numeric',
+                          year: 'numeric'
+                        }) : '—'}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <div className="flex-1 bg-gray-200 rounded-full h-2 overflow-hidden min-w-[80px]">
+                          <div
+                            className="bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] h-full transition-all"
+                            style={{ width: `${task.progress}%` }}
+                          />
+                        </div>
+                        <span className="text-xs text-gray-600 font-semibold">{task.progress}%</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

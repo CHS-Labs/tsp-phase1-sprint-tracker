@@ -1,11 +1,79 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronRight, CheckCircle, Calendar, Edit2 } from 'lucide-react';
-import { tasks, currentUser, Task, TaskStatus } from '../../data/dummyData';
+// Pull live data from the DataContext instead of using dummy data
+import { useData } from '../../contexts/DataContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { TaskStatus } from '../../data/dummyData';
+
+/*
+ * Updated MyTasksTable
+ *
+ * This version of the MyTasksTable component reads the task list from the
+ * DataContext and filters it based on the currently authenticated user
+ * (via the AuthContext). It also performs a simple mapping from the raw
+ * Google Sheets row format to the shape expected by the table UI. A
+ * helper function assigns a synthetic progress value based on the task
+ * status until a more precise progress metric is available from the
+ * backend.  If no user is logged in the table will render empty.
+ */
 
 export default function MyTasksTable() {
-  const myTasks = tasks.filter(task => task.owner === currentUser);
+  const { tasks } = useData();
+  const { user } = useAuth();
   const [expandedTask, setExpandedTask] = useState<string | null>(null);
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [editingTask, setEditingTask] = useState<any | null>(null);
+
+  // Derive a progress percentage from a task's status. This is a stopgap
+  // until real progress data is available on the Google Sheet. Feel free
+  // to adjust these values to better reflect your workflow.
+  const getTaskProgress = (status: string): number => {
+    switch (status) {
+      case 'Done':
+        return 100;
+      case 'In Progress':
+        return 50;
+      case 'Blocked':
+        return 10;
+      default:
+        return 0;
+    }
+  };
+
+  // Build a list of tasks belonging to the current user. We coerce
+  // property names from the ActionLogTask shape (taskId, taskDescription,
+  // relatedSOWCategory, etc.) into the keys expected by the UI (id,
+  // description, category). If you extend the Action Log sheet with
+  // progress or other metrics you can update this mapping accordingly.
+  const myTasks = useMemo(() => {
+    if (!user) return [];
+    return tasks
+      .filter((task) =>
+        task.owner && task.owner.toLowerCase() === user.email.toLowerCase()
+      )
+      .map((task) => {
+        const id = (task as any).id ?? task.taskId;
+        const description = (task as any).description ?? task.taskDescription;
+        const category = (task as any).category ?? task.relatedSOWCategory;
+        const priority = (task as any).priority ?? task.priority;
+        const status = (task.status || (task as any).status) as TaskStatus;
+        const dueDate = (task as any).dueDate ?? task.dueDate;
+        const sprintWeekRaw = (task as any).sprintWeek ?? task.sprintWeek;
+        const sprintWeek = sprintWeekRaw ? Number(sprintWeekRaw) : 0;
+        const notes = (task as any).notes ?? task.notes ?? '';
+        return {
+          id,
+          description,
+          category,
+          priority,
+          status,
+          owner: task.owner,
+          dueDate,
+          sprintWeek,
+          progress: getTaskProgress(status),
+          notes,
+        };
+      });
+  }, [tasks, user]);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -62,20 +130,34 @@ export default function MyTasksTable() {
                 >
                   <td className="px-6 py-4">
                     <button
-                      onClick={() => setExpandedTask(expandedTask === task.id ? null : task.id)}
+                      onClick={() =>
+                        setExpandedTask(
+                          expandedTask === task.id ? null : (task.id as string)
+                        )
+                      }
                       className="text-gray-400 hover:text-gray-600 transition-colors"
                     >
-                      {expandedTask === task.id ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
+                      {expandedTask === task.id ? (
+                        <ChevronDown size={18} />
+                      ) : (
+                        <ChevronRight size={18} />
+                      )}
                     </button>
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-start gap-2">
-                      <span className="text-xs text-gray-500 font-mono">{task.id}</span>
-                      <p className="text-sm text-gray-900 font-medium">{task.description}</p>
+                      <span className="text-xs text-gray-500 font-mono">
+                        {task.id}
+                      </span>
+                      <p className="text-sm text-gray-900 font-medium">
+                        {task.description}
+                      </p>
                     </div>
                   </td>
                   <td className="px-6 py-4">
-                    <span className="text-sm text-gray-600">{task.category}</span>
+                    <span className="text-sm text-gray-600">
+                      {task.category}
+                    </span>
                   </td>
                   <td className="px-6 py-4">
                     <span
@@ -98,10 +180,12 @@ export default function MyTasksTable() {
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-2 text-sm text-gray-600">
                       <Calendar size={14} />
-                      {new Date(task.dueDate).toLocaleDateString('en-US', {
-                        month: 'short',
-                        day: 'numeric'
-                      })}
+                      {task.dueDate
+                        ? new Date(task.dueDate).toLocaleDateString('en-US', {
+                            month: 'short',
+                            day: 'numeric',
+                          })
+                        : '—'}
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -112,7 +196,9 @@ export default function MyTasksTable() {
                           style={{ width: `${task.progress}%` }}
                         />
                       </div>
-                      <span className="text-xs text-gray-600 font-semibold">{task.progress}%</span>
+                      <span className="text-xs text-gray-600 font-semibold">
+                        {Math.round(task.progress)}%
+                      </span>
                     </div>
                   </td>
                   <td className="px-6 py-4">
@@ -141,13 +227,21 @@ export default function MyTasksTable() {
                     <td colSpan={7} className="px-6 py-4">
                       <div className="space-y-2">
                         <div>
-                          <p className="text-xs font-semibold text-gray-600 uppercase">Sprint Week</p>
-                          <p className="text-sm text-gray-900">Week {task.sprintWeek}</p>
+                          <p className="text-xs font-semibold text-gray-600 uppercase">
+                            Sprint Week
+                          </p>
+                          <p className="text-sm text-gray-900">
+                            Week {task.sprintWeek || '—'}
+                          </p>
                         </div>
                         {task.notes && (
                           <div>
-                            <p className="text-xs font-semibold text-gray-600 uppercase">Notes</p>
-                            <p className="text-sm text-gray-700 italic">{task.notes}</p>
+                            <p className="text-xs font-semibold text-gray-600 uppercase">
+                              Notes
+                            </p>
+                            <p className="text-sm text-gray-700 italic">
+                              {task.notes}
+                            </p>
                           </div>
                         )}
                       </div>
@@ -163,7 +257,9 @@ export default function MyTasksTable() {
       {editingTask && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-lg w-full mx-4 p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Edit Task</h3>
+            <h3 className="text-xl font-bold text-gray-900 mb-4">
+              Edit Task
+            </h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">

@@ -1,17 +1,62 @@
 import { CheckCircle2, Clock, AlertCircle, Circle } from 'lucide-react';
-import { tasks, currentUser } from '../../data/dummyData';
+import { useData } from '../../contexts/DataContext';
+import { useAuth } from '../../contexts/AuthContext';
+import { useMemo } from 'react';
+
+/*
+ * Updated TaskSummary
+ *
+ * This component calculates task statistics and overall progress based on
+ * the tasks assigned to the currently logged in user. Instead of
+ * referencing dummy data, it uses the DataContext to access the
+ * Action Log and AuthContext to determine the user’s email. A helper
+ * assigns a synthetic progress value from the task’s status until
+ * real progress data is available from the backend.
+ */
 
 export default function TaskSummary() {
-  const myTasks = tasks.filter(task => task.owner === currentUser);
+  const { tasks } = useData();
+  const { user } = useAuth();
 
-  const stats = {
-    notStarted: myTasks.filter(t => t.status === 'Not Started').length,
-    inProgress: myTasks.filter(t => t.status === 'In Progress').length,
-    blocked: myTasks.filter(t => t.status === 'Blocked').length,
-    done: myTasks.filter(t => t.status === 'Done').length
+  const getTaskProgress = (status: string): number => {
+    switch (status) {
+      case 'Done':
+        return 100;
+      case 'In Progress':
+        return 50;
+      case 'Blocked':
+        return 10;
+      default:
+        return 0;
+    }
   };
 
-  const totalProgress = myTasks.reduce((sum, task) => sum + task.progress, 0) / myTasks.length;
+  const myTasks = useMemo(() => {
+    if (!user) return [];
+    return tasks
+      .filter((task) =>
+        task.owner && task.owner.toLowerCase() === user.email.toLowerCase()
+      )
+      .map((task) => {
+        const status = task.status || (task as any).status;
+        return {
+          status,
+          progress: getTaskProgress(status),
+        };
+      });
+  }, [tasks, user]);
+
+  const stats = {
+    notStarted: myTasks.filter((t) => t.status === 'Not Started').length,
+    inProgress: myTasks.filter((t) => t.status === 'In Progress').length,
+    blocked: myTasks.filter((t) => t.status === 'Blocked').length,
+    done: myTasks.filter((t) => t.status === 'Done').length,
+  };
+
+  const totalProgress =
+    myTasks.length > 0
+      ? myTasks.reduce((sum, task) => sum + task.progress, 0) / myTasks.length
+      : 0;
 
   const statCards = [
     {
@@ -20,7 +65,7 @@ export default function TaskSummary() {
       icon: Circle,
       color: 'text-gray-400',
       bgColor: 'bg-gray-50',
-      borderColor: 'border-gray-200'
+      borderColor: 'border-gray-200',
     },
     {
       label: 'In Progress',
@@ -28,7 +73,7 @@ export default function TaskSummary() {
       icon: Clock,
       color: 'text-[#1A9CD7]',
       bgColor: 'bg-blue-50',
-      borderColor: 'border-blue-200'
+      borderColor: 'border-blue-200',
     },
     {
       label: 'Blocked',
@@ -36,7 +81,7 @@ export default function TaskSummary() {
       icon: AlertCircle,
       color: 'text-red-500',
       bgColor: 'bg-red-50',
-      borderColor: 'border-red-200'
+      borderColor: 'border-red-200',
     },
     {
       label: 'Completed',
@@ -44,8 +89,8 @@ export default function TaskSummary() {
       icon: CheckCircle2,
       color: 'text-green-500',
       bgColor: 'bg-green-50',
-      borderColor: 'border-green-200'
-    }
+      borderColor: 'border-green-200',
+    },
   ];
 
   return (
@@ -55,7 +100,9 @@ export default function TaskSummary() {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="text-sm text-gray-600">Overall Progress</p>
-            <p className="text-2xl font-bold text-[#E98A24]">{Math.round(totalProgress)}%</p>
+            <p className="text-2xl font-bold text-[#E98A24]">
+              {Math.round(totalProgress)}%
+            </p>
           </div>
           <div className="w-16 h-16">
             <svg className="transform -rotate-90" viewBox="0 0 36 36">
@@ -98,7 +145,9 @@ export default function TaskSummary() {
                   {stat.count}
                 </span>
               </div>
-              <p className="text-sm font-semibold text-gray-700">{stat.label}</p>
+              <p className="text-sm font-semibold text-gray-700">
+                {stat.label}
+              </p>
             </div>
           );
         })}

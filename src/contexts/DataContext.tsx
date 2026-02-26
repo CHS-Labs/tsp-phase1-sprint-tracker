@@ -58,7 +58,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [error, setError] = useState<string | null>(null);
 
   const refreshData = async () => {
-    if (!isAuthenticated) return;
+    // Note: Google Sheets API uses API key (read-only), no auth required
+    // Google Drive API also uses API key for public/shared folders
 
     setIsLoading(true);
     setError(null);
@@ -112,10 +113,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      refreshData();
-    }
-  }, [isAuthenticated]);
+    // Load data immediately on mount - no auth required for read-only API key access
+    refreshData();
+  }, []);
 
   return (
     <DataContext.Provider

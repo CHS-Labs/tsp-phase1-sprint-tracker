@@ -1,0 +1,8 @@
+{
+  "name": "tsp-phase1-sprint-tracker",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install"
+}

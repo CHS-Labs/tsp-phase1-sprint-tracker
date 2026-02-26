@@ -9,9 +9,18 @@ export default function MeetingAgendas() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Meeting Agendas</h2>
-        <div className="flex items-center gap-2">
-          <Calendar size={20} className="text-gray-500" />
-          <span className="text-sm text-gray-600">{meetingAgendas.length} meetings</span>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <Calendar size={20} className="text-gray-500" />
+            <span className="text-sm text-gray-600">{meetingAgendas.length} meetings</span>
+          </div>
+          <button
+            onClick={() => window.print()}
+            className="text-gray-400 hover:text-[#E98A24] transition-colors no-print"
+            aria-label="Print this page"
+          >
+            <Printer size={20} />
+          </button>
         </div>
       </div>
 

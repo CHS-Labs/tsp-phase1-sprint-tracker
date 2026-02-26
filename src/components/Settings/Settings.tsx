@@ -8,10 +8,10 @@ export default function Settings() {
         <h2 className="text-2xl font-bold text-gray-900">Sprint Information</h2>
         <button
           onClick={() => window.print()}
-          className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors no-print"
+          className="text-gray-400 hover:text-[#E98A24] transition-colors no-print"
+          aria-label="Print this page"
         >
-          <Printer size={18} />
-          <span className="font-semibold">Print</span>
+          <Printer size={20} />
         </button>
       </div>
 

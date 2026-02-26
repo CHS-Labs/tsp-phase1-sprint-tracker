@@ -27,18 +27,18 @@ export default function Analytics() {
     <div className="space-y-6 print-full-width">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-gray-900">Analytics Dashboard</h2>
-        <div className="flex items-center gap-4 no-print">
-          <button
-            onClick={() => window.print()}
-            className="flex items-center gap-2 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            <Printer size={18} />
-            <span className="font-semibold">Print</span>
-          </button>
-          <div className="flex items-center gap-2 text-sm text-gray-600">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2 text-sm text-gray-600 no-print">
             <Activity size={18} />
             <span>Real-time sprint metrics</span>
           </div>
+          <button
+            onClick={() => window.print()}
+            className="text-gray-400 hover:text-[#E98A24] transition-colors no-print"
+            aria-label="Print this page"
+          >
+            <Printer size={20} />
+          </button>
         </div>
       </div>
 

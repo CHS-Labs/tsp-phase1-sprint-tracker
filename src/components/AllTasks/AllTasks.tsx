@@ -5,7 +5,11 @@ import { useData } from '../../contexts/DataContext';
 type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
 type Priority = 'High' | 'Medium' | 'Low';
 
-export default function AllTasks() {
+interface AllTasksProps {
+  onViewTask?: (taskId: string) => void;
+}
+
+export default function AllTasks({ onViewTask }: AllTasksProps) {
   const { tasks, isLoading } = useData();
   const [filterOwner, setFilterOwner] = useState<string>('');
   const [filterCategory, setFilterCategory] = useState<string>('');
@@ -204,7 +208,11 @@ export default function AllTasks() {
                 </tr>
               ) : (
                 filteredTasks.map((task) => (
-                  <tr key={task.id} className="hover:bg-gray-50 transition-colors">
+                  <tr
+                    key={task.id}
+                    className="hover:bg-gray-50 transition-colors cursor-pointer"
+                    onClick={() => onViewTask?.(task.id)}
+                  >
                     <td className="px-6 py-4">
                       <span className="text-xs font-mono text-gray-600">{task.id}</span>
                     </td>

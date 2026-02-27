@@ -4,6 +4,7 @@ import Header from './components/Layout/Header';
 import HeroSection from './components/Layout/HeroSection';
 import Dashboard from './components/Dashboard/Dashboard';
 import AllTasks from './components/AllTasks/AllTasks';
+import MeetingFlow from './components/MeetingFlow/MeetingFlow';
 import MeetingAgendas from './components/MeetingAgendas/MeetingAgendas';
 import MeetingSummaries from './components/MeetingSummaries/MeetingSummaries';
 import DecisionsAndLogs from './components/Decisions/DecisionsAndLogs';
@@ -12,24 +13,51 @@ import ParkingLot from './components/ParkingLot/ParkingLot';
 import UserFeedback from './components/UserFeedback/UserFeedback';
 import Settings from './components/Settings/Settings';
 import FloatingActionButton from './components/Common/FloatingActionButton';
+import TaskDetailModal from './components/Common/TaskDetailModal';
+import { useData } from './contexts/DataContext';
+import { ActionLogTask } from './types';
 
-type View = 'dashboard' | 'all-tasks' | 'agendas' | 'meeting-summaries' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
+type View = 'dashboard' | 'all-tasks' | 'meeting-flow' | 'agendas' | 'meeting-summaries' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
-  const [searchQuery, setSearchQuery] = useState('');
   const [showHero, setShowHero] = useState(true);
+  const [selectedTask, setSelectedTask] = useState<ActionLogTask | null>(null);
+  const { tasks } = useData();
 
-  const handleSearch = (query: string) => {
-    setSearchQuery(query);
+  const handleSearch = (_query: string) => {
+    // Search functionality to be implemented
+  };
+
+  const handleViewTask = (taskId: string) => {
+    const task = tasks.find(t => t.taskId === taskId);
+    if (task) {
+      setSelectedTask(task);
+    }
+  };
+
+  const handleViewDecision = (_decisionId: string) => {
+    setCurrentView('decisions');
+  };
+
+  const handleViewMeeting = (_meetingId: string) => {
+    setCurrentView('meeting-flow');
   };
 
   const renderView = () => {
     switch (currentView) {
       case 'dashboard':
-        return <Dashboard />;
+        return <Dashboard
+          onNavigateToMeetingFlow={() => setCurrentView('meeting-flow')}
+          onViewTask={handleViewTask}
+        />;
       case 'all-tasks':
-        return <AllTasks />;
+        return <AllTasks onViewTask={handleViewTask} />;
+      case 'meeting-flow':
+        return <MeetingFlow
+          onViewDecision={handleViewDecision}
+          onViewTask={handleViewTask}
+        />;
       case 'agendas':
         return <MeetingAgendas />;
       case 'meeting-summaries':
@@ -45,7 +73,10 @@ function App() {
       case 'settings':
         return <Settings />;
       default:
-        return <Dashboard />;
+        return <Dashboard
+          onNavigateToMeetingFlow={() => setCurrentView('meeting-flow')}
+          onViewTask={handleViewTask}
+        />;
     }
   };
 
@@ -76,6 +107,15 @@ function App() {
       </div>
 
       <FloatingActionButton />
+
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+          onViewDecision={handleViewDecision}
+          onViewMeeting={handleViewMeeting}
+        />
+      )}
     </div>
   );
 }

@@ -3,7 +3,12 @@ import MyTasksTable from './MyTasksTable';
 import TeamWidget from './TeamWidget';
 import RecentMeetings from './RecentMeetings';
 
-export default function Dashboard() {
+interface DashboardProps {
+  onNavigateToMeetingFlow?: () => void;
+  onViewTask?: (taskId: string) => void;
+}
+
+export default function Dashboard({ onNavigateToMeetingFlow, onViewTask: _onViewTask }: DashboardProps) {
   return (
     <div className="space-y-8">
       <TaskSummary />
@@ -13,7 +18,7 @@ export default function Dashboard() {
           <MyTasksTable />
         </div>
         <div className="space-y-6">
-          <RecentMeetings />
+          <RecentMeetings onNavigateToMeetingFlow={onNavigateToMeetingFlow} />
           <TeamWidget />
         </div>
       </div>

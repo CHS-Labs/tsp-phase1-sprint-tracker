@@ -61,6 +61,10 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
     // Note: Google Sheets API uses API key (read-only), no auth required
     // Google Drive API also uses API key for public/shared folders
 
+    console.log('[DataContext] Starting data fetch...');
+    console.log('[DataContext] API Key:', import.meta.env.VITE_GOOGLE_API_KEY ? 'Present' : 'MISSING');
+    console.log('[DataContext] Spreadsheet ID:', import.meta.env.VITE_SPREADSHEET_ID ? 'Present' : 'MISSING');
+
     setIsLoading(true);
     setError(null);
 
@@ -89,6 +93,11 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         googleSheetsService.getTeam(),
       ]);
 
+      console.log('[DataContext] Data fetched successfully!');
+      console.log('[DataContext] Tasks count:', tasksData.length);
+      console.log('[DataContext] Team count:', teamData.length);
+      console.log('[DataContext] Sample task:', tasksData[0]);
+
       setSOWDeliverables(sowData);
       setTasks(tasksData);
       setMeetings(meetingsData);
@@ -100,7 +109,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setChangeOrders(changeOrdersData);
       setTeam(teamData);
     } catch (err) {
-      console.error('Error fetching data:', err);
+      console.error('[DataContext] ERROR fetching data:', err);
       setError(err instanceof Error ? err.message : 'Failed to fetch data');
     } finally {
       setIsLoading(false);

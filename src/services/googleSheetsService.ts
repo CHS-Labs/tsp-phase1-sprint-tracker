@@ -180,6 +180,11 @@ class GoogleSheetsService {
       status: 'active',
     }));
   }
+
+  // Update task status (read-only API, throws error for now)
+  async updateTaskStatus(taskId: string, status: string): Promise<void> {
+    throw new Error('Task updates not supported with read-only API key. Use Google Sheets directly.');
+  }
 }
 
 export const googleSheetsService = new GoogleSheetsService();

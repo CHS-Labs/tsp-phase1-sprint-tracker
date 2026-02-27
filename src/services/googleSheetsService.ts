@@ -15,6 +15,16 @@ import {
 const SPREADSHEET_ID = import.meta.env.VITE_SPREADSHEET_ID;
 const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
 
+// Critical environment variable validation
+if (!SPREADSHEET_ID || !API_KEY) {
+  console.error('═'.repeat(80));
+  console.error('[GoogleSheetsService] CRITICAL ERROR: Missing environment variables!');
+  console.error(`VITE_SPREADSHEET_ID: ${SPREADSHEET_ID ? '✓ Present' : '✗ MISSING'}`);
+  console.error(`VITE_GOOGLE_API_KEY: ${API_KEY ? '✓ Present' : '✗ MISSING'}`);
+  console.error('The application cannot fetch data without these variables.');
+  console.error('═'.repeat(80));
+}
+
 class GoogleSheetsService {
   // Service account approach - no user token needed
   // Using API key for read-only access

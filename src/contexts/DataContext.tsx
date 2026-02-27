@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useAuth } from './AuthContext';
 import { googleSheetsService } from '../services/googleSheetsService';
 import {
   SOWDeliverable,
@@ -41,7 +40,7 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { isAuthenticated } = useAuth();
+  // Removed unused useAuth() call - no authentication needed for API key access
 
   const [sowDeliverables, setSOWDeliverables] = useState<SOWDeliverable[]>([]);
   const [tasks, setTasks] = useState<ActionLogTask[]>([]);

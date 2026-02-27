@@ -5,7 +5,14 @@ import { DataProvider } from './contexts/DataContext';
 import App from './App.tsx';
 import './index.css';
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+console.log('[main.tsx] Starting React app...');
+
+createRoot(rootElement).render(
   <StrictMode>
     <AuthProvider>
       <DataProvider>
@@ -14,3 +21,5 @@ createRoot(document.getElementById('root')!).render(
     </AuthProvider>
   </StrictMode>
 );
+
+console.log('[main.tsx] React app mounted');

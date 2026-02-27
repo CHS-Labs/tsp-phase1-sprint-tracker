@@ -110,7 +110,19 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setTeam(teamData);
     } catch (err) {
       console.error('[DataContext] ERROR fetching data:', err);
-      setError(err instanceof Error ? err.message : 'Failed to fetch data');
+      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch data';
+      setError(errorMessage);
+      // Don't block rendering - set empty arrays so UI can still display
+      setSOWDeliverables([]);
+      setTasks([]);
+      setMeetings([]);
+      setDecisions([]);
+      setParkingLot([]);
+      setValidationChecklist([]);
+      setAnalytics([]);
+      setRisks([]);
+      setChangeOrders([]);
+      setTeam([]);
     } finally {
       setIsLoading(false);
     }

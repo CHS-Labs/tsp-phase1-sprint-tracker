@@ -1,6 +1,5 @@
 import { CheckCircle2, Clock, AlertCircle, Circle } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
-import { useAuth } from '../../contexts/AuthContext';
 import { useMemo } from 'react';
 
 /*
@@ -16,7 +15,6 @@ import { useMemo } from 'react';
 
 export default function TaskSummary() {
   const { tasks } = useData();
-  const { user } = useAuth();
 
   const getTaskProgress = (status: string): number => {
     switch (status) {

@@ -2,7 +2,6 @@ import { useState, useMemo } from 'react';
 import { ChevronDown, ChevronRight, CheckCircle, Calendar, Edit2 } from 'lucide-react';
 // Pull live data from the DataContext instead of using dummy data
 import { useData } from '../../contexts/DataContext';
-import { useAuth } from '../../contexts/AuthContext';
 
 type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
 
@@ -20,7 +19,6 @@ type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
 
 export default function MyTasksTable() {
   const { tasks } = useData();
-  const { user } = useAuth();
   const [expandedTask, setExpandedTask] = useState<string | null>(null);
   const [editingTask, setEditingTask] = useState<any | null>(null);
 
@@ -70,7 +68,7 @@ export default function MyTasksTable() {
           notes,
         };
       });
-  }, [tasks, user]);
+  }, [tasks]);
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {

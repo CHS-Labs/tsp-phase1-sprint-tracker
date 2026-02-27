@@ -5,6 +5,7 @@ import HeroSection from './components/Layout/HeroSection';
 import Dashboard from './components/Dashboard/Dashboard';
 import AllTasks from './components/AllTasks/AllTasks';
 import MeetingAgendas from './components/MeetingAgendas/MeetingAgendas';
+import MeetingSummaries from './components/MeetingSummaries/MeetingSummaries';
 import DecisionsAndLogs from './components/Decisions/DecisionsAndLogs';
 import Analytics from './components/Analytics/Analytics';
 import ParkingLot from './components/ParkingLot/ParkingLot';
@@ -12,7 +13,7 @@ import UserFeedback from './components/UserFeedback/UserFeedback';
 import Settings from './components/Settings/Settings';
 import FloatingActionButton from './components/Common/FloatingActionButton';
 
-type View = 'dashboard' | 'all-tasks' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
+type View = 'dashboard' | 'all-tasks' | 'agendas' | 'meeting-summaries' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
@@ -31,6 +32,8 @@ function App() {
         return <AllTasks />;
       case 'agendas':
         return <MeetingAgendas />;
+      case 'meeting-summaries':
+        return <MeetingSummaries />;
       case 'decisions':
         return <DecisionsAndLogs />;
       case 'analytics':

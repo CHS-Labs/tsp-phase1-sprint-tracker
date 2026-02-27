@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Filter, Calendar, User, Tag, Printer } from 'lucide-react';
+import { Filter, Calendar, User, Tag, Printer, Link as LinkIcon, FileText } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 
 type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
@@ -37,6 +37,8 @@ export default function AllTasks() {
       status: task.status as TaskStatus,
       dueDate: task.dueDate,
       progress: getTaskProgress(task.status),
+      sourceMeetingId: task.sourceMeetingId,
+      linkedDecisionId: task.linkedDecisionId,
     }));
   }, [tasks]);
 
@@ -207,7 +209,23 @@ export default function AllTasks() {
                       <span className="text-xs font-mono text-gray-600">{task.id}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm text-gray-900 font-medium max-w-md">{task.description}</p>
+                      <p className="text-sm text-gray-900 font-medium max-w-md mb-2">{task.description}</p>
+                      {(task.sourceMeetingId || task.linkedDecisionId) && (
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          {task.sourceMeetingId && (
+                            <div className="flex items-center gap-1 text-xs text-gray-500">
+                              <LinkIcon size={10} />
+                              <span>Meeting: {task.sourceMeetingId}</span>
+                            </div>
+                          )}
+                          {task.linkedDecisionId && (
+                            <div className="flex items-center gap-1 text-xs text-blue-600">
+                              <FileText size={10} />
+                              <span>Decision: {task.linkedDecisionId}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-gray-600">{task.owner}</span>

@@ -1,6 +1,7 @@
 import TaskSummary from './TaskSummary';
 import MyTasksTable from './MyTasksTable';
 import TeamWidget from './TeamWidget';
+import RecentMeetings from './RecentMeetings';
 
 export default function Dashboard() {
   return (
@@ -11,7 +12,8 @@ export default function Dashboard() {
         <div className="lg:col-span-2">
           <MyTasksTable />
         </div>
-        <div>
+        <div className="space-y-6">
+          <RecentMeetings />
           <TeamWidget />
         </div>
       </div>

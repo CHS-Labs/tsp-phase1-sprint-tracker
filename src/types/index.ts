@@ -22,6 +22,7 @@ export interface ActionLogTask {
   sprintWeek: string;
   notes: string;
   linkedDecisionId: string;
+  sourceMeetingId?: string;
 }
 
 export interface WeeklyMeeting {
@@ -45,6 +46,8 @@ export interface Decision {
   impact: string;
   reversalRisk: string;
   notes: string;
+  sourceMeetingId?: string;
+  linkedTaskIds?: string[];
 }
 
 export interface ParkingLotIdea {

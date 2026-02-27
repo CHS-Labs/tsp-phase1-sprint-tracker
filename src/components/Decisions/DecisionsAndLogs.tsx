@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FileText, AlertTriangle, CheckCircle, GitBranch, Calendar, User, TrendingUp, Printer } from 'lucide-react';
+import { FileText, AlertTriangle, CheckCircle, GitBranch, Calendar, User, TrendingUp, Printer, Link as LinkIcon, ListTodo } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 
 type Tab = 'decisions' | 'risks' | 'validation' | 'changes';
@@ -143,7 +143,33 @@ export default function DecisionsAndLogs() {
                           )}
                         </div>
                         <h3 className="text-lg font-bold text-gray-900 mb-2">{decision.decisionSummary}</h3>
-                        <p className="text-sm text-gray-700">{decision.context}</p>
+                        <p className="text-sm text-gray-700 mb-3">{decision.context}</p>
+
+                        {decision.sourceMeetingId && (
+                          <div className="flex items-center gap-2 text-xs text-gray-600 mb-2">
+                            <LinkIcon size={12} />
+                            <span>Origin: Meeting {decision.sourceMeetingId}</span>
+                          </div>
+                        )}
+
+                        {decision.linkedTaskIds && decision.linkedTaskIds.length > 0 && (
+                          <div className="mt-3 pt-3 border-t border-gray-300">
+                            <div className="flex items-center gap-2 mb-2">
+                              <ListTodo size={12} className="text-gray-600" />
+                              <span className="text-xs font-semibold text-gray-600 uppercase">Spawned Tasks</span>
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {decision.linkedTaskIds.map((taskId) => (
+                                <span
+                                  key={taskId}
+                                  className="px-2.5 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold"
+                                >
+                                  {taskId}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
                       {decision.approvedBy && (
                         <div className="ml-4">

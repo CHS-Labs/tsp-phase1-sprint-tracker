@@ -32,19 +32,15 @@ export default function TaskSummary() {
   };
 
   const myTasks = useMemo(() => {
-    if (!user) return [];
-    return tasks
-      .filter((task) =>
-        task.owner && task.owner.toLowerCase() === user.email.toLowerCase()
-      )
-      .map((task) => {
-        const status = task.status || (task as any).status;
-        return {
-          status,
-          progress: getTaskProgress(status),
-        };
-      });
-  }, [tasks, user]);
+    // Show ALL tasks since owner column is empty and there's no real authentication
+    return tasks.map((task) => {
+      const status = task.status || (task as any).status;
+      return {
+        status,
+        progress: getTaskProgress(status),
+      };
+    });
+  }, [tasks]);
 
   const stats = {
     notStarted: myTasks.filter((t) => t.status === 'Not Started').length,

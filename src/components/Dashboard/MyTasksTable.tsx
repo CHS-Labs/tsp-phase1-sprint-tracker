@@ -46,18 +46,14 @@ export default function MyTasksTable() {
   // description, category). If you extend the Action Log sheet with
   // progress or other metrics you can update this mapping accordingly.
   const myTasks = useMemo(() => {
-    if (!user) return [];
-    return tasks
-      .filter((task) =>
-        task.owner && task.owner.toLowerCase() === user.email.toLowerCase()
-      )
-      .map((task) => {
-        const id = (task as any).id ?? task.taskId;
-        const description = (task as any).description ?? task.taskDescription;
-        const category = (task as any).category ?? task.relatedSOWCategory;
-        const priority = (task as any).priority ?? task.priority;
-        const status = (task.status || (task as any).status) as TaskStatus;
-        const dueDate = (task as any).dueDate ?? task.dueDate;
+    // Show ALL tasks since owner column is empty and there's no real authentication
+    return tasks.map((task) => {
+      const id = (task as any).id ?? task.taskId;
+      const description = (task as any).description ?? task.taskDescription;
+      const category = (task as any).category ?? task.relatedSOWCategory;
+      const priority = (task as any).priority ?? task.priority;
+      const status = (task.status || (task as any).status) as TaskStatus;
+      const dueDate = (task as any).dueDate ?? task.dueDate;
         const sprintWeekRaw = (task as any).sprintWeek ?? task.sprintWeek;
         const sprintWeek = sprintWeekRaw ? Number(sprintWeekRaw) : 0;
         const notes = (task as any).notes ?? task.notes ?? '';

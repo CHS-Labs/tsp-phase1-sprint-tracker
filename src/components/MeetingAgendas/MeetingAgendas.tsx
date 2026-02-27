@@ -87,8 +87,7 @@ export default function MeetingAgendas() {
               const date = new Date(agenda.createdTime);
               return (
                 <div key={agenda.id} className="relative pl-20 group">
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform">
-                    {date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).split(' ').map(s => s.substring(0, 3)).join('\n')}
+                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] shadow-lg group-hover:scale-110 transition-transform">
                   </div>
 
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-lg transition-all hover:border-[#E98A24]">

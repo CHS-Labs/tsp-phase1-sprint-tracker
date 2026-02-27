@@ -90,7 +90,7 @@ export default function TaskSummary() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold text-gray-900">My Tasks Overview</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Tasks Overview</h2>
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="text-sm text-gray-600">Overall Progress</p>

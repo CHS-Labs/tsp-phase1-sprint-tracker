@@ -111,7 +111,7 @@ export const SHEET_NAMES = {
   ACTION_LOG: 'Action Log',
   MEETING_LOG: 'Weekly Meeting Log',
   DECISIONS: 'Decisions Log',
-  PARKING_LOT: 'Parking Lot',
+  PARKING_LOT: 'Parking Lot – Phase 2',
   VALIDATION: 'Validation Checklist',
   ANALYTICS: 'Analytics Baseline',
   RISK_REGISTER: 'Risk Register',

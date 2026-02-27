@@ -1,10 +1,10 @@
 import TaskSummary from './TaskSummary';
+import RecentMeetings from './RecentMeetings';
 import MyTasksTable from './MyTasksTable';
 import TeamWidget from './TeamWidget';
-import RecentMeetings from './RecentMeetings';
 
 interface DashboardProps {
-  onNavigateToMeetingFlow?: () => void;
+  onNavigateToMeetingFlow: () => void;
   onViewTask?: (taskId: string) => void;
 }
 
@@ -13,12 +13,13 @@ export default function Dashboard({ onNavigateToMeetingFlow, onViewTask: _onView
     <div className="space-y-8">
       <TaskSummary />
 
+      <RecentMeetings onNavigateToMeetingFlow={onNavigateToMeetingFlow} />
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <MyTasksTable />
         </div>
-        <div className="space-y-6">
-          <RecentMeetings onNavigateToMeetingFlow={onNavigateToMeetingFlow} />
+        <div>
           <TeamWidget />
         </div>
       </div>

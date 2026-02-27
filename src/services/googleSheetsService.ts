@@ -12,8 +12,13 @@ import {
   SHEET_NAMES,
 } from '../types';
 
-const SPREADSHEET_ID = import.meta.env.VITE_SPREADSHEET_ID;
-const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
+// Support both Vite (browser) and Node.js (CLI/testing) environments
+const SPREADSHEET_ID = typeof import.meta.env !== 'undefined'
+  ? import.meta.env.VITE_SPREADSHEET_ID
+  : process.env.VITE_SPREADSHEET_ID;
+const API_KEY = typeof import.meta.env !== 'undefined'
+  ? import.meta.env.VITE_GOOGLE_API_KEY
+  : process.env.VITE_GOOGLE_API_KEY;
 
 // Critical environment variable validation
 if (!SPREADSHEET_ID || !API_KEY) {

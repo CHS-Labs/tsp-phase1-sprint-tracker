@@ -1,79 +1,53 @@
-import { useState, useEffect } from 'react';
-import { Calendar, ChevronDown, ChevronRight, ExternalLink, ListTodo, FileText, Lightbulb, AlertTriangle, Users } from 'lucide-react';
-import { meetingService, Meeting, MeetingSection } from '../../services/meetingService';
+import { useState } from 'react';
+import { Calendar, Users, FileText, CheckCircle, Lightbulb, AlertTriangle, ChevronDown, ChevronRight, ExternalLink } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
 
-interface MeetingFlowProps {
-  onViewDecision?: (decisionId: string) => void;
-  onViewTask?: (taskId: string) => void;
-}
-
-const sectionIcons: { [key: number]: any } = {
-  1: Users,
-  2: FileText,
-  3: ListTodo,
-  4: FileText,
-  5: Lightbulb,
-  6: AlertTriangle,
-};
-
-export default function MeetingFlow({ onViewDecision, onViewTask }: MeetingFlowProps) {
-  const [meetings, setMeetings] = useState<Meeting[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [expandedMeetings, setExpandedMeetings] = useState<Set<string>>(new Set());
-  const [expandedSections, setExpandedSections] = useState<Set<string>>(new Set());
-  const { decisions, tasks } = useData();
-
-  useEffect(() => {
-    loadMeetings();
-  }, []);
-
-  const loadMeetings = async () => {
-    setIsLoading(true);
-    const data = await meetingService.getRecentMeetings(10);
-    setMeetings(data);
-    if (data.length > 0) {
-      setExpandedMeetings(new Set([data[0].meetingId]));
-    }
-    setIsLoading(false);
-  };
+export default function MeetingFlow() {
+  const { meetings, isLoading } = useData();
+  const [expandedMeeting, setExpandedMeeting] = useState<string | null>(null);
+  const [expandedSection, setExpandedSection] = useState<{ [key: string]: number | null }>({});
 
   const toggleMeeting = (meetingId: string) => {
-    const newExpanded = new Set(expandedMeetings);
-    if (newExpanded.has(meetingId)) {
-      newExpanded.delete(meetingId);
-    } else {
-      newExpanded.add(meetingId);
-    }
-    setExpandedMeetings(newExpanded);
+    setExpandedMeeting(expandedMeeting === meetingId ? null : meetingId);
   };
 
-  const toggleSection = (key: string) => {
-    const newExpanded = new Set(expandedSections);
-    if (newExpanded.has(key)) {
-      newExpanded.delete(key);
-    } else {
-      newExpanded.add(key);
-    }
-    setExpandedSections(newExpanded);
+  const toggleSection = (meetingId: string, sectionNum: number) => {
+    setExpandedSection(prev => ({
+      ...prev,
+      [meetingId]: prev[meetingId] === sectionNum ? null : sectionNum
+    }));
   };
 
-  const getDecisionSummary = (decisionId: string) => {
-    const decision = decisions.find(d => d.decisionId === decisionId);
-    return decision ? decision.decisionSummary : decisionId;
-  };
-
-  const getTaskDescription = (taskId: string) => {
-    const task = tasks.find(t => t.taskId === taskId);
-    return task ? task.taskDescription : taskId;
-  };
+  const sections = [
+    { num: 1, title: 'Opening + Intent', icon: FileText },
+    { num: 2, title: 'Review SOW Deliverables', icon: CheckCircle },
+    { num: 3, title: 'Review Action Log', icon: FileText },
+    { num: 4, title: 'Decision Confirmations', icon: CheckCircle },
+    { num: 5, title: 'Parking Lot', icon: Lightbulb },
+    { num: 6, title: 'Risks / Blockers', icon: AlertTriangle }
+  ];
 
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
           <div className="inline-block w-12 h-12 border-4 border-[#E98A24] border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="text-gray-600">Loading meeting flow...</p>
+          <p className="text-gray-600">Loading meetings...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (meetings.length === 0) {
+    return (
+      <div className="space-y-6">
+        <h2 className="text-2xl font-bold text-gray-900">Meeting Flow</h2>
+        <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
+          <Calendar size={64} className="mx-auto text-gray-400 mb-4" />
+          <p className="text-gray-600 text-lg font-semibold mb-2">No meetings processed yet</p>
+          <p className="text-sm text-gray-500 max-w-md mx-auto">
+            After your next meeting, run <code className="bg-gray-200 px-2 py-1 rounded">/meeting-processor</code> to extract decisions, tasks, and discussion notes.
+          </p>
         </div>
       </div>
     );
@@ -89,185 +63,157 @@ export default function MeetingFlow({ onViewDecision, onViewTask }: MeetingFlowP
         </div>
       </div>
 
-      {meetings.length === 0 ? (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-12 text-center">
-          <Calendar size={48} className="mx-auto text-gray-400 mb-4" />
-          <p className="text-gray-600">No meetings processed yet.</p>
-          <p className="text-sm text-gray-500 mt-2">
-            Run /meeting-processor after your next meeting.
-          </p>
-        </div>
-      ) : (
-        <div className="relative">
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#E98A24] via-[#1A9CD7] to-gray-300" />
+      <div className="relative">
+        {/* Timeline line */}
+        <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#E98A24] via-[#1A9CD7] to-gray-300" />
 
-          <div className="space-y-8">
-            {meetings.map((meeting) => {
-              const date = new Date(meeting.meetingDate);
-              const isExpanded = expandedMeetings.has(meeting.meetingId);
+        <div className="space-y-8">
+          {meetings.map((meeting, index) => {
+            const meetingDate = meeting.meetingDate ? new Date(meeting.meetingDate) : new Date();
+            const isExpanded = expandedMeeting === meeting.meetingDate;
 
-              return (
-                <div key={meeting.meetingId} className="relative pl-20 group">
-                  <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-bold shadow-lg group-hover:scale-110 transition-transform text-center text-xs leading-tight">
-                    <div>
-                      <div>{date.toLocaleDateString('en-US', { month: 'short' })}</div>
-                      <div className="text-xl">{date.getDate()}</div>
-                    </div>
+            // Mock data for stats (will come from sheets once columns added)
+            const stats = {
+              decisions: 0,
+              tasks: 0,
+              parkingLot: 0,
+              risks: 0
+            };
+
+            return (
+              <div key={meeting.meetingDate || index} className="relative pl-20">
+                {/* Date badge */}
+                <div className="absolute left-0 top-0 w-16 h-16 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white font-bold shadow-lg">
+                  <div className="text-center text-xs leading-tight">
+                    <div>{meetingDate.toLocaleDateString('en-US', { month: 'short' })}</div>
+                    <div className="text-lg">{meetingDate.getDate()}</div>
                   </div>
+                </div>
 
-                  <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all hover:border-[#E98A24]">
-                    <div
-                      className="p-6 cursor-pointer hover:bg-gray-50 transition-colors"
-                      onClick={() => toggleMeeting(meeting.meetingId)}
-                    >
-                      <div className="flex items-start justify-between mb-4">
-                        <div className="flex-1">
-                          <div className="flex items-center gap-3 mb-2">
-                            {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
-                            <h3 className="text-lg font-bold text-gray-900">{meeting.meetingType}</h3>
-                          </div>
-                          <div className="flex items-center gap-2 ml-8">
-                            <Calendar size={14} className="text-gray-500" />
-                            <span className="text-sm text-gray-600">
-                              {date.toLocaleDateString('en-US', {
-                                weekday: 'long',
-                                month: 'long',
-                                day: 'numeric',
-                                year: 'numeric'
-                              })}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            meeting.status === 'Committed' ? 'bg-green-100 text-green-800' :
-                            meeting.status === 'Extracted' ? 'bg-blue-100 text-blue-800' :
-                            'bg-gray-100 text-gray-800'
-                          }`}>
-                            {meeting.status}
+                {/* Meeting card */}
+                <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+                  {/* Header */}
+                  <button
+                    onClick={() => toggleMeeting(meeting.meetingDate)}
+                    className="w-full p-6 flex items-start justify-between hover:bg-gray-50 transition-colors"
+                  >
+                    <div className="flex-1 text-left">
+                      <div className="flex items-center gap-3 mb-2">
+                        <h3 className="text-lg font-bold text-gray-900">
+                          {meeting.meetingType || 'Weekly Sprint Review'}
+                        </h3>
+                        <span className="px-2.5 py-1 bg-blue-100 text-blue-700 text-xs font-semibold rounded-full">
+                          {meeting.processed?.toLowerCase() === 'yes' ? 'Committed' : 'Extracted'}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-4 text-sm text-gray-600">
+                        <div className="flex items-center gap-1">
+                          <Calendar size={14} />
+                          <span>
+                            {meetingDate.toLocaleDateString('en-US', {
+                              weekday: 'long',
+                              month: 'long',
+                              day: 'numeric',
+                              year: 'numeric'
+                            })}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex items-center gap-6 text-sm ml-8">
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <FileText size={14} className="text-[#E98A24]" />
-                          <span className="font-semibold">{meeting.decisionsCount}</span>
-                          <span>decisions</span>
+                      {/* Stats */}
+                      <div className="flex items-center gap-4 mt-3 text-sm">
+                        <div className="flex items-center gap-1 text-purple-600">
+                          <CheckCircle size={14} />
+                          <span className="font-semibold">{stats.decisions}</span>
+                          <span className="text-gray-500">decisions</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <ListTodo size={14} className="text-[#1A9CD7]" />
-                          <span className="font-semibold">{meeting.tasksCount}</span>
-                          <span>tasks</span>
+                        <div className="flex items-center gap-1 text-blue-600">
+                          <FileText size={14} />
+                          <span className="font-semibold">{stats.tasks}</span>
+                          <span className="text-gray-500">tasks</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-gray-600">
-                          <Lightbulb size={14} className="text-yellow-500" />
-                          <span className="font-semibold">{meeting.parkingLotCount}</span>
-                          <span>parking lot</span>
+                        <div className="flex items-center gap-1 text-yellow-600">
+                          <Lightbulb size={14} />
+                          <span className="font-semibold">{stats.parkingLot}</span>
+                          <span className="text-gray-500">parking lot</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-red-600">
+                          <AlertTriangle size={14} />
+                          <span className="font-semibold">{stats.risks}</span>
+                          <span className="text-gray-500">risks</span>
                         </div>
                       </div>
-
-                      {meeting.fathomLink && meeting.fathomLink !== '#' && (
-                        <div className="mt-4 ml-8">
-                          <a
-                            href={meeting.fathomLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-sm text-[#1A9CD7] hover:text-[#E98A24] font-semibold transition-colors"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <ExternalLink size={14} />
-                            View Fathom Transcript
-                          </a>
-                        </div>
-                      )}
                     </div>
 
-                    {isExpanded && meeting.sections.length > 0 && (
-                      <div className="border-t border-gray-200 bg-gray-50">
-                        <div className="p-6 space-y-4">
-                          {meeting.sections.map((section) => {
-                            const sectionKey = `${meeting.meetingId}-${section.sectionNumber}`;
-                            const isSectionExpanded = expandedSections.has(sectionKey);
-                            const SectionIcon = sectionIcons[section.sectionNumber] || FileText;
+                    <div className="ml-4">
+                      {isExpanded ? (
+                        <ChevronDown size={24} className="text-gray-400" />
+                      ) : (
+                        <ChevronRight size={24} className="text-gray-400" />
+                      )}
+                    </div>
+                  </button>
+
+                  {/* Expanded content */}
+                  {isExpanded && (
+                    <div className="border-t border-gray-200 bg-gray-50">
+                      <div className="p-6 space-y-4">
+                        {/* Meeting metadata */}
+                        <div className="bg-white rounded-lg p-4 border border-gray-200">
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <span className="text-gray-500 font-semibold">Summary:</span>
+                              <p className="text-gray-700 mt-1">{meeting.summary || 'No summary provided'}</p>
+                            </div>
+                            {meeting.fathomTranscriptLink && (
+                              <div>
+                                <span className="text-gray-500 font-semibold">Transcript:</span>
+                                <a
+                                  href={meeting.fathomTranscriptLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="flex items-center gap-1 text-blue-600 hover:text-blue-700 mt-1"
+                                >
+                                  <ExternalLink size={14} />
+                                  <span>View in Fathom</span>
+                                </a>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Sections */}
+                        <div className="space-y-2">
+                          <h4 className="text-sm font-semibold text-gray-700 uppercase">Meeting Sections</h4>
+                          {sections.map((section) => {
+                            const isSectionExpanded = expandedSection[meeting.meetingDate] === section.num;
+                            const Icon = section.icon;
 
                             return (
-                              <div key={sectionKey} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-                                <div
-                                  className="p-4 cursor-pointer hover:bg-gray-50 transition-colors"
-                                  onClick={() => toggleSection(sectionKey)}
+                              <div key={section.num} className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                                <button
+                                  onClick={() => toggleSection(meeting.meetingDate, section.num)}
+                                  className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
                                 >
                                   <div className="flex items-center gap-3">
-                                    {isSectionExpanded ? <ChevronDown size={18} /> : <ChevronRight size={18} />}
-                                    <SectionIcon size={18} className="text-[#E98A24]" />
-                                    <h4 className="font-bold text-gray-900">{section.sectionTitle}</h4>
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#E98A24] to-[#1A9CD7] flex items-center justify-center text-white text-sm font-bold">
+                                      {section.num}
+                                    </div>
+                                    <Icon size={18} className="text-gray-500" />
+                                    <span className="font-semibold text-gray-900">{section.title}</span>
                                   </div>
-                                </div>
+                                  {isSectionExpanded ? (
+                                    <ChevronDown size={20} className="text-gray-400" />
+                                  ) : (
+                                    <ChevronRight size={20} className="text-gray-400" />
+                                  )}
+                                </button>
 
                                 {isSectionExpanded && (
-                                  <div className="px-4 pb-4 space-y-4">
-                                    <div>
-                                      <h5 className="text-xs font-semibold text-gray-500 uppercase mb-2">Discussion Summary</h5>
-                                      <p className="text-sm text-gray-700">{section.discussionSummary}</p>
+                                  <div className="p-4 border-t border-gray-200 bg-gray-50">
+                                    <div className="text-sm text-gray-600 italic">
+                                      Section details will appear here once Meeting Discussion Notes tab is populated in Google Sheets.
                                     </div>
-
-                                    {section.keyPoints.length > 0 && (
-                                      <div>
-                                        <h5 className="text-xs font-semibold text-gray-500 uppercase mb-2">Key Points</h5>
-                                        <ul className="space-y-1">
-                                          {section.keyPoints.map((point, idx) => (
-                                            <li key={idx} className="flex items-start gap-2 text-sm text-gray-700">
-                                              <span className="text-[#E98A24] mt-1">•</span>
-                                              <span>{point}</span>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    )}
-
-                                    {section.relatedDecisionIds.length > 0 && (
-                                      <div>
-                                        <h5 className="text-xs font-semibold text-gray-500 uppercase mb-2">Related Decisions</h5>
-                                        <div className="space-y-1">
-                                          {section.relatedDecisionIds.map((decisionId) => (
-                                            <button
-                                              key={decisionId}
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                onViewDecision?.(decisionId);
-                                              }}
-                                              className="flex items-center gap-2 text-sm text-[#1A9CD7] hover:text-[#E98A24] font-medium transition-colors"
-                                            >
-                                              <FileText size={12} />
-                                              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">{decisionId}</span>
-                                              <span className="truncate">{getDecisionSummary(decisionId)}</span>
-                                            </button>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {section.relatedTaskIds.length > 0 && (
-                                      <div>
-                                        <h5 className="text-xs font-semibold text-gray-500 uppercase mb-2">Related Tasks</h5>
-                                        <div className="space-y-1">
-                                          {section.relatedTaskIds.map((taskId) => (
-                                            <button
-                                              key={taskId}
-                                              onClick={(e) => {
-                                                e.stopPropagation();
-                                                onViewTask?.(taskId);
-                                              }}
-                                              className="flex items-center gap-2 text-sm text-[#1A9CD7] hover:text-[#E98A24] font-medium transition-colors"
-                                            >
-                                              <ListTodo size={12} />
-                                              <span className="text-xs bg-gray-100 px-2 py-0.5 rounded">{taskId}</span>
-                                              <span className="truncate">{getTaskDescription(taskId)}</span>
-                                            </button>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
                                   </div>
                                 )}
                               </div>
@@ -275,14 +221,14 @@ export default function MeetingFlow({ onViewDecision, onViewTask }: MeetingFlowP
                           })}
                         </div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  )}
                 </div>
-              );
-            })}
-          </div>
+              </div>
+            );
+          })}
         </div>
-      )}
+      </div>
     </div>
   );
 }

@@ -1,0 +1,413 @@
+PENDING REVIEW: 2026-02-27 Meeting Extraction
+
+══════════════════════════════════════════════════════════════════════
+MEETING METADATA
+══════════════════════════════════════════════════════════════════════
+Date: 2026-02-27
+Meeting ID: 2026-02-27-01
+Meeting Type: Weekly Sprint Review
+Attendees: Glen, Ed, Shelly, Ken
+Fathom Link: Not provided
+Transcript Word Count: 697 words
+Processing Date: 2026-02-27
+
+══════════════════════════════════════════════════════════════════════
+SECTION 1: OPENING + INTENT
+══════════════════════════════════════════════════════════════════════
+
+Discussion Summary:
+SECTION 1: OPENING + INTENT
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Good morning everyone. Let's kick off today's Phase 1 review. Our main intent today i...
+
+Key Points:
+• SECTION 1: OPENING + INTENT
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Good morning everyone.
+• Let's kick off today's Phase 1 review.
+• Our main intent today is to ensure we have unified understanding of the phased process and confirm the goals are clearly defined before tech work begins.
+
+Related Decisions: D-2026-02-27-01-01, D-2026-02-27-01-02
+Related Tasks: 1.1, 1.2
+
+══════════════════════════════════════════════════════════════════════
+SECTION 2: REVIEW SOW DELIVERABLES
+══════════════════════════════════════════════════════════════════════
+
+Discussion Summary:
+SECTION 2: REVIEW SOW DELIVERABLES
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Let's review where we are on Left/Right clarity. We need to integrate the full...
+
+Key Points:
+• SECTION 2: REVIEW SOW DELIVERABLES
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Let's review where we are on Left/Right clarity.
+• We need to integrate the full Left-to-Right explanatory text - pause, admit, choose - along with character formation details.
+• This needs to be aligned with the Ken avatar teaching module.
+
+Related Decisions: None
+Related Tasks: 2.1, 2.2, 2.3, 2.4
+
+══════════════════════════════════════════════════════════════════════
+SECTION 3: REVIEW ACTION LOG
+══════════════════════════════════════════════════════════════════════
+
+Discussion Summary:
+SECTION 3: REVIEW ACTION LOG
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Looking at our existing action items, we need to create onboarding micro-instruction...
+
+Key Points:
+• SECTION 3: REVIEW ACTION LOG
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Looking at our existing action items, we need to create onboarding micro-instruction to explain the web app save-to-home-screen process.
+• Many users struggle to "find" the app later after initial signup.
+• Shelly: That's a critical usability issue.
+
+Related Decisions: None
+Related Tasks: 3.1, 3.2, 3.3, 3.4, 3.5
+
+══════════════════════════════════════════════════════════════════════
+SECTION 4: DECISION CONFIRMATIONS
+══════════════════════════════════════════════════════════════════════
+
+Discussion Summary:
+SECTION 4: DECISION CONFIRMATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: To confirm our key decisions today:
+
+1. No brainstorming during hardening sprin...
+
+Key Points:
+• . No brainstorming during hardening sprint - approved by Glen and Ed
+• . Ken avatar must be invitational, not gatekeeping - approved by team consensus
+• . Save-to-home-screen instruction is critical for Phase 1 - approved by Glen
+
+Related Decisions: D-2026-02-27-01-01, D-2026-02-27-01-02, D-2026-02-27-01-03, D-2026-02-27-01-04
+Related Tasks: None
+
+══════════════════════════════════════════════════════════════════════
+SECTION 5: PARKING LOT
+══════════════════════════════════════════════════════════════════════
+
+Discussion Summary:
+SECTION 5: PARKING LOT
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: For Phase 2, we're deferring the analytics dashboard improvements. We need to validate ana...
+
+Key Points:
+• SECTION 5: PARKING LOT
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: For Phase 2, we're deferring the analytics dashboard improvements.
+• We need to validate analytics instrumentation first, but the advanced reporting features can wait.
+• Ed: Also parking for Phase 2: The full video library reorganization.
+
+Related Decisions: None
+Related Tasks: 5.1
+
+══════════════════════════════════════════════════════════════════════
+SECTION 6: RISKS / BLOCKERS
+══════════════════════════════════════════════════════════════════════
+
+Discussion Summary:
+SECTION 6: RISKS / BLOCKERS
+═══════════════════════════════════════════════════════════════════════════════
+
+Shelly: One risk I'm concerned about is the timeline for Ken avatar integration. If we run ...
+
+Key Points:
+• SECTION 6: RISKS / BLOCKERS
+═══════════════════════════════════════════════════════════════════════════════
+
+Shelly: One risk I'm concerned about is the timeline for Ken avatar integration.
+• If we run into technical issues with the HeyGen embed, it could delay other dependent work.
+• Glen: Good point.
+
+Related Decisions: None
+Related Tasks: 6.1
+
+══════════════════════════════════════════════════════════════════════
+EXTRACTED DECISIONS
+══════════════════════════════════════════════════════════════════════
+
+Decision D-2026-02-27-01-01:
+├─ Decision: SOW deliverables only
+├─ Context: Extracted from meeting discussion
+├─ Approved By: Team
+├─ Impact: Medium
+├─ Reversal Risk: Low
+├─ Source Section: 1
+└─ Related Tasks: None
+
+Decision D-2026-02-27-01-02:
+├─ Decision: by myself and Ed
+├─ Context: Extracted from meeting discussion
+├─ Approved By: Team
+├─ Impact: Medium
+├─ Reversal Risk: Low
+├─ Source Section: 1
+└─ Related Tasks: None
+
+Decision D-2026-02-27-01-01:
+├─ Decision: remove the "Made in Bolt" overlay that's obstructing the profile button
+├─ Context: Extracted from meeting discussion
+├─ Approved By: Team
+├─ Impact: Medium
+├─ Reversal Risk: Low
+├─ Source Section: 4
+└─ Related Tasks: None
+
+Decision D-2026-02-27-01-02:
+├─ Decision: by Glen and Ed
+2
+├─ Context: Extracted from meeting discussion
+├─ Approved By: Team
+├─ Impact: Medium
+├─ Reversal Risk: Low
+├─ Source Section: 4
+└─ Related Tasks: None
+
+Decision D-2026-02-27-01-03:
+├─ Decision: by team consensus
+3
+├─ Context: Extracted from meeting discussion
+├─ Approved By: Team
+├─ Impact: Medium
+├─ Reversal Risk: Low
+├─ Source Section: 4
+└─ Related Tasks: None
+
+Decision D-2026-02-27-01-04:
+├─ Decision: by Glen
+
+These are all high-impact decisions with low reversal risk
+├─ Context: Extracted from meeting discussion
+├─ Approved By: Team
+├─ Impact: Medium
+├─ Reversal Risk: Low
+├─ Source Section: 4
+└─ Related Tasks: None
+
+══════════════════════════════════════════════════════════════════════
+EXTRACTED TASKS (NEW)
+══════════════════════════════════════════════════════════════════════
+
+Task 1.1:
+├─ Description: stay focused on execution, not ideation
+├─ Category: Opening + Intent
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 1
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 1.2:
+├─ Description: proceed based on approved SOW deliverables only
+├─ Category: Opening + Intent
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 1
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 2.1:
+├─ Description: integrate the full Left-to-Right explanatory text - pause, admit, choose - along with character formation details
+├─ Category: SOW Deliverables
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 2
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 2.2:
+├─ Description: ensure Ken's visibility and placement as the primary teacher, but it must be invitational, not a forced onboarding loop that gates access
+├─ Category: SOW Deliverables
+├─ Priority: High
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 2
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 2.3:
+├─ Description: elevate the 17 core teaching videos
+├─ Category: SOW Deliverables
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 2
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 2.4:
+├─ Description: is to position Ken avatar as primary teacher without forced onboarding
+├─ Category: SOW Deliverables
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 2
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 3.1:
+├─ Description: create onboarding micro-instruction to explain the web app save-to-home-screen process
+├─ Category: Action Log
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 3
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 3.2:
+├─ Description: design the instruction flow
+├─ Category: Action Log
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 3
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 3.3:
+├─ Description: integrate the one-pager content into the app reading section with proper formatting and downloadable materials
+├─ Category: Action Log
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 3
+├─ Linked Decision: None
+└─ Status: Not Started
+
+⚠️ DUPLICATE CHECK:
+   Similar to existing Task 5
+   Confidence: 87%
+   → REVIEW REQUIRED: Keep separate or merge?
+
+Task 3.4:
+├─ Description: be high priority
+├─ Category: Action Log
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 3
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 3.5:
+├─ Description: document it
+├─ Category: Action Log
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 3
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 5.1:
+├─ Description: validate analytics instrumentation first, but the advanced reporting features can wait
+├─ Category: Parking Lot
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 5
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+Task 6.1:
+├─ Description: ensure we're covering all the major use cases or risk confusing users
+├─ Category: Risks / Blockers
+├─ Priority: Medium
+├─ Owner: [TBD]
+├─ Source: Meeting 2026-02-27-01, Section 6
+├─ Linked Decision: None
+└─ Status: Not Started
+
+✓ No similar task found
+
+══════════════════════════════════════════════════════════════════════
+PARKING LOT ITEMS IDENTIFIED
+══════════════════════════════════════════════════════════════════════
+
+• , we're deferring the analytics dashboard improvements - Phase 2
+• The full video library reorganization - Phase 2
+• work - Phase 2
+• scope - Phase 2
+
+══════════════════════════════════════════════════════════════════════
+RISKS/BLOCKERS IDENTIFIED
+══════════════════════════════════════════════════════════════════════
+
+• S / BLOCKERS
+═══════════════════════════════════════════════════════════════════════════════
+
+Shelly: One risk I'm concerned about is the timeline for Ken avatar integration - Probability: Medium, Mitigation: To be determined
+• s with the HeyGen embed, it could delay other dependent work - Probability: Medium, Mitigation: To be determined
+• - the save-to-home-screen instructions vary by browser and device - Probability: Medium, Mitigation: To be determined
+• confusing users - Probability: Medium, Mitigation: To be determined
+
+══════════════════════════════════════════════════════════════════════
+GLEN'S REVIEW ACTIONS
+══════════════════════════════════════════════════════════════════════
+
+Please review and complete:
+
+☐ Review all extracted decisions - accurate? (Y/N)
+   Comments: ___________________
+
+☐ Review all extracted tasks - correct? (Y/N)
+   Comments: ___________________
+
+☐ Resolve duplicate flags:
+   Task 3.3: ☐ Keep separate ☐ Merge with 5 ☐ Delete
+
+☐ Assign owners to [TBD] tasks:
+   Task 1.1: Owner = _______________
+   Task 1.2: Owner = _______________
+   Task 2.1: Owner = _______________
+   Task 2.2: Owner = _______________
+   Task 2.3: Owner = _______________
+   Task 2.4: Owner = _______________
+   Task 3.1: Owner = _______________
+   Task 3.2: Owner = _______________
+   Task 3.3: Owner = _______________
+   Task 3.4: Owner = _______________
+   Task 3.5: Owner = _______________
+   Task 5.1: Owner = _______________
+   Task 6.1: Owner = _______________
+
+☐ Any corrections needed?
+   ____________________________________
+
+══════════════════════════════════════════════════════════════════════
+APPROVAL
+══════════════════════════════════════════════════════════════════════
+
+☐ APPROVED - Commit to Control Center
+
+Approved By: _______________ Date: ___________
+
+══════════════════════════════════════════════════════════════════════

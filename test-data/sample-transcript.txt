@@ -1,0 +1,85 @@
+Meeting: Phase 1 Architecture Hardening - Weekly Review
+Date: March 5, 2026
+Attendees: Glen, Ed, Shelly
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 1: OPENING + INTENT
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Good morning everyone. Let's kick off today's Phase 1 review. Our main intent today is to ensure we have unified understanding of the phased process and confirm the goals are clearly defined before tech work begins. Agreement is critical for tech to move ahead without scope creep.
+
+Ed: Absolutely. I want to emphasize - no brainstorming sessions during this hardening sprint. We need to stay focused on execution, not ideation. This is about implementing what we've already decided.
+
+Shelly: Got it. So to be clear, the decision is that we will have no brainstorming during the hardening sprint, and tech should proceed based on approved SOW deliverables only. Is that correct?
+
+Glen: Yes, that's confirmed. Approved by myself and Ed. This is a high-impact decision that governs all Phase 1 changes going forward.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 2: REVIEW SOW DELIVERABLES
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Let's review where we are on Left/Right clarity. We need to integrate the full Left-to-Right explanatory text - pause, admit, choose - along with character formation details. This needs to be aligned with the Ken avatar teaching module.
+
+Shelly: The Ken avatar is already produced. Here's the link: https://app.heygen.com/videos/12824c8810a24f6786efa3dbbfe9ea04
+
+We need to ensure Ken's visibility and placement as the primary teacher, but it must be invitational, not a forced onboarding loop that gates access.
+
+Glen: Correct. The task is to position Ken avatar as primary teacher without forced onboarding. We want users to be able to engage with him naturally.
+
+Ed: Also, we should elevate the 17 core teaching videos. Right now they're buried on the book page. They need better discoverability while maintaining homepage clarity. This is medium priority.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 3: REVIEW ACTION LOG
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: Looking at our existing action items, we need to create onboarding micro-instruction to explain the web app save-to-home-screen process. Many users struggle to "find" the app later after initial signup.
+
+Shelly: That's a critical usability issue. Should be high priority. I'll need to design the instruction flow.
+
+Ed: We also need to integrate the one-pager content into the app reading section with proper formatting and downloadable materials. This is related to content accuracy.
+
+Glen: Agreed. Let's also decide on whether we're updating "Full Chapters" language for clarity or expanding the content to actually be full chapters.
+
+Shelly: That's more of a content decision than tech. Low priority for Phase 1, but we should document it.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 4: DECISION CONFIRMATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: To confirm our key decisions today:
+
+1. No brainstorming during hardening sprint - approved by Glen and Ed
+2. Ken avatar must be invitational, not gatekeeping - approved by team consensus
+3. Save-to-home-screen instruction is critical for Phase 1 - approved by Glen
+
+These are all high-impact decisions with low reversal risk. We're committed to these approaches.
+
+Ed: One more thing - we decided to remove the "Made in Bolt" overlay that's obstructing the profile button. That's a quick fix but important for UX.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 5: PARKING LOT
+═══════════════════════════════════════════════════════════════════════════════
+
+Glen: For Phase 2, we're deferring the analytics dashboard improvements. We need to validate analytics instrumentation first, but the advanced reporting features can wait.
+
+Ed: Also parking for Phase 2: The full video library reorganization. We'll improve discoverability in Phase 1, but a complete restructure is Phase 2 work.
+
+Shelly: What about the social sharing features? Users have requested them but that's definitely future scope.
+
+Glen: Agreed, Phase 2. Let's document that as well.
+
+═══════════════════════════════════════════════════════════════════════════════
+SECTION 6: RISKS / BLOCKERS
+═══════════════════════════════════════════════════════════════════════════════
+
+Shelly: One risk I'm concerned about is the timeline for Ken avatar integration. If we run into technical issues with the HeyGen embed, it could delay other dependent work.
+
+Glen: Good point. Let's mark that as medium probability risk. Mitigation would be to have a fallback static image approach ready.
+
+Ed: Another concern - the save-to-home-screen instructions vary by browser and device. We need to ensure we're covering all the major use cases or risk confusing users.
+
+Glen: That's a valid concern. High probability issue. Mitigation: Create device-specific instruction sets and test thoroughly before rollout.
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF MEETING
+═══════════════════════════════════════════════════════════════════════════════

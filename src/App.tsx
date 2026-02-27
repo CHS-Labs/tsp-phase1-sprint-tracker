@@ -6,62 +6,34 @@ import Dashboard from './components/Dashboard/Dashboard';
 import AllTasks from './components/AllTasks/AllTasks';
 import MeetingFlow from './components/MeetingFlow/MeetingFlow';
 import MeetingAgendas from './components/MeetingAgendas/MeetingAgendas';
-import MeetingSummaries from './components/MeetingSummaries/MeetingSummaries';
 import DecisionsAndLogs from './components/Decisions/DecisionsAndLogs';
 import Analytics from './components/Analytics/Analytics';
 import ParkingLot from './components/ParkingLot/ParkingLot';
 import UserFeedback from './components/UserFeedback/UserFeedback';
 import Settings from './components/Settings/Settings';
 import FloatingActionButton from './components/Common/FloatingActionButton';
-import TaskDetailModal from './components/Common/TaskDetailModal';
-import { useData } from './contexts/DataContext';
-import { ActionLogTask } from './types';
 
-type View = 'dashboard' | 'all-tasks' | 'meeting-flow' | 'agendas' | 'meeting-summaries' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
+type View = 'dashboard' | 'all-tasks' | 'meeting-flow' | 'agendas' | 'decisions' | 'analytics' | 'parking-lot' | 'user-feedback' | 'settings';
 
 function App() {
   const [currentView, setCurrentView] = useState<View>('dashboard');
+  const [searchQuery, setSearchQuery] = useState('');
   const [showHero, setShowHero] = useState(true);
-  const [selectedTask, setSelectedTask] = useState<ActionLogTask | null>(null);
-  const { tasks } = useData();
 
-  const handleSearch = (_query: string) => {
-    // Search functionality to be implemented
-  };
-
-  const handleViewTask = (taskId: string) => {
-    const task = tasks.find(t => t.taskId === taskId);
-    if (task) {
-      setSelectedTask(task);
-    }
-  };
-
-  const handleViewDecision = (_decisionId: string) => {
-    setCurrentView('decisions');
-  };
-
-  const handleViewMeeting = (_meetingId: string) => {
-    setCurrentView('meeting-flow');
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
   };
 
   const renderView = () => {
     switch (currentView) {
       case 'dashboard':
-        return <Dashboard
-          onNavigateToMeetingFlow={() => setCurrentView('meeting-flow')}
-          onViewTask={handleViewTask}
-        />;
+        return <Dashboard onNavigateToMeetingFlow={() => setCurrentView('meeting-flow')} />;
       case 'all-tasks':
-        return <AllTasks onViewTask={handleViewTask} />;
+        return <AllTasks />;
       case 'meeting-flow':
-        return <MeetingFlow
-          onViewDecision={handleViewDecision}
-          onViewTask={handleViewTask}
-        />;
+        return <MeetingFlow />;
       case 'agendas':
         return <MeetingAgendas />;
-      case 'meeting-summaries':
-        return <MeetingSummaries />;
       case 'decisions':
         return <DecisionsAndLogs />;
       case 'analytics':
@@ -73,10 +45,7 @@ function App() {
       case 'settings':
         return <Settings />;
       default:
-        return <Dashboard
-          onNavigateToMeetingFlow={() => setCurrentView('meeting-flow')}
-          onViewTask={handleViewTask}
-        />;
+        return <Dashboard onNavigateToMeetingFlow={() => setCurrentView('meeting-flow')} />;
     }
   };
 
@@ -107,15 +76,6 @@ function App() {
       </div>
 
       <FloatingActionButton />
-
-      {selectedTask && (
-        <TaskDetailModal
-          task={selectedTask}
-          onClose={() => setSelectedTask(null)}
-          onViewDecision={handleViewDecision}
-          onViewMeeting={handleViewMeeting}
-        />
-      )}
     </div>
   );
 }

@@ -1,20 +1,19 @@
 import { useState, useMemo } from 'react';
-import { Filter, Calendar, User, Tag, Printer, Link as LinkIcon, FileText } from 'lucide-react';
+import { Filter, Calendar, User, Tag, Printer } from 'lucide-react';
 import { useData } from '../../contexts/DataContext';
+import TaskDetailModal from '../Common/TaskDetailModal';
+import { ActionLogTask } from '../../types';
 
 type TaskStatus = 'Not Started' | 'In Progress' | 'Blocked' | 'Done';
 type Priority = 'High' | 'Medium' | 'Low';
 
-interface AllTasksProps {
-  onViewTask?: (taskId: string) => void;
-}
-
-export default function AllTasks({ onViewTask }: AllTasksProps) {
+export default function AllTasks() {
   const { tasks, isLoading } = useData();
   const [filterOwner, setFilterOwner] = useState<string>('');
   const [filterCategory, setFilterCategory] = useState<string>('');
   const [filterPriority, setFilterPriority] = useState<Priority | ''>('');
   const [filterStatus, setFilterStatus] = useState<TaskStatus | ''>('');
+  const [selectedTask, setSelectedTask] = useState<ActionLogTask | null>(null);
 
   // Helper to calculate progress from status
   const getTaskProgress = (status: string): number => {
@@ -41,8 +40,6 @@ export default function AllTasks({ onViewTask }: AllTasksProps) {
       status: task.status as TaskStatus,
       dueDate: task.dueDate,
       progress: getTaskProgress(task.status),
-      sourceMeetingId: task.sourceMeetingId,
-      linkedDecisionId: task.linkedDecisionId,
     }));
   }, [tasks]);
 
@@ -207,33 +204,20 @@ export default function AllTasks({ onViewTask }: AllTasksProps) {
                   </td>
                 </tr>
               ) : (
-                filteredTasks.map((task) => (
+                filteredTasks.map((task) => {
+                  // Find the original task object for the modal
+                  const originalTask = tasks.find(t => t.taskId === task.id);
+                  return (
                   <tr
                     key={task.id}
+                    onClick={() => originalTask && setSelectedTask(originalTask)}
                     className="hover:bg-gray-50 transition-colors cursor-pointer"
-                    onClick={() => onViewTask?.(task.id)}
                   >
                     <td className="px-6 py-4">
                       <span className="text-xs font-mono text-gray-600">{task.id}</span>
                     </td>
                     <td className="px-6 py-4">
-                      <p className="text-sm text-gray-900 font-medium max-w-md mb-2">{task.description}</p>
-                      {(task.sourceMeetingId || task.linkedDecisionId) && (
-                        <div className="flex flex-wrap gap-2 mt-2">
-                          {task.sourceMeetingId && (
-                            <div className="flex items-center gap-1 text-xs text-gray-500">
-                              <LinkIcon size={10} />
-                              <span>Meeting: {task.sourceMeetingId}</span>
-                            </div>
-                          )}
-                          {task.linkedDecisionId && (
-                            <div className="flex items-center gap-1 text-xs text-blue-600">
-                              <FileText size={10} />
-                              <span>Decision: {task.linkedDecisionId}</span>
-                            </div>
-                          )}
-                        </div>
-                      )}
+                      <p className="text-sm text-gray-900 font-medium max-w-md">{task.description}</p>
                     </td>
                     <td className="px-6 py-4">
                       <span className="text-sm text-gray-600">{task.owner}</span>
@@ -281,12 +265,20 @@ export default function AllTasks({ onViewTask }: AllTasksProps) {
                       </div>
                     </td>
                   </tr>
-                ))
+                  );
+                })
               )}
             </tbody>
           </table>
         </div>
       </div>
+
+      {selectedTask && (
+        <TaskDetailModal
+          task={selectedTask}
+          onClose={() => setSelectedTask(null)}
+        />
+      )}
     </div>
   );
 }
